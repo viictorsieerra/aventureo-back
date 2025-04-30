@@ -1,22 +1,51 @@
+using AventureoBack.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//  Configurar cadena de conexión (appsettings.json)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Ejemplo en appsettings.json:
+// "ConnectionStrings": {
+//   "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AventureoDb;Trusted_Connection=True;"
+// }
 
+//  Registrar el DbContext con SQL Server
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+// Añadir servicios MVC / Controllers
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// (Opcional) Añadir Swagger para documentación
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configurar CORS si tu frontend está en otro origen
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware pipeline
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
+// Usar CORS
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
