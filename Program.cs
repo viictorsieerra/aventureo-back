@@ -3,52 +3,37 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//  Configurar cadena de conexión (appsettings.json)
+// Cadena de conexión y DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// Ejemplo en appsettings.json:
-// "ConnectionStrings": {
-//   "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=AventureoDb;Trusted_Connection=True;"
-// }
-
-//  Registrar el DbContext con SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Añadir servicios MVC / Controllers
+// Servicios de controllers
 builder.Services.AddControllers();
 
-// (Opcional) Añadir Swagger para documentación
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configurar CORS si tu frontend está en otro origen
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy => policy
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod());
-});
+// CORS (opcional)
+builder.Services.AddCors(o => o.AddPolicy("AllowAll", p =>
+    p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
-
-// Middleware pipeline
 
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
+   app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Aventureo API v1");
+});
 }
 
 app.UseHttpsRedirection();
-
-// Usar CORS
 app.UseCors("AllowAll");
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
