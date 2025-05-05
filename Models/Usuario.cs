@@ -13,8 +13,19 @@ public class Usuario
     public string? apellidos { get; set; }
     public DateTime fecNacimiento { get; set; } = DateTime.Now;
     public string? email { get; set; }
-    public string? contraseña { get; set; }
+    public string? contrasena { get; set; }
 
     public virtual List<Plan>? planes { get; set; }
     public virtual List<Viaje>? viajes { get; set; }
+
+    public Usuario(){}
+    public Usuario (int _idUsuario, string _nombre, string _apellidos, DateTime _fecNacimiento, string _email, string _contrasena)
+    {
+        idUsuario = _idUsuario;
+        nombre = _nombre;
+        apellidos = _apellidos;
+        fecNacimiento = _fecNacimiento;
+        email = _email;
+        contrasena = _contrasena;
+    }
 }
