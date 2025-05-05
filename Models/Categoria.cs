@@ -1,12 +1,17 @@
-namespace AventureoBack.Models
-{
-    public class Categoria
-    {
-        public int idCategoria { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-       
-        public ICollection<Gasto> Gastos { get; set; }
-    }
+namespace AventureoBack.Models;
+
+[Table("Categoria")]
+public class Categoria
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int idCategoria { get; set; }
+
+    public string? nombre { get; set; }
+    public string? descripcion { get; set; }
+
+    public virtual ICollection<Gasto>? gastos { get; set; }
 }

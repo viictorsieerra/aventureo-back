@@ -1,15 +1,20 @@
 namespace AventureoBack.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+[Table("Usuario")]
 public class Usuario
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int idUsuario { get; set; }
-    public string Nombre { get; set; }
-    public string Apellidos { get; set; }
-    public DateTime FecNacimiento { get; set; }
-    public string Email { get; set; }
-    public string Contraseña { get; set; }
 
-    
-    public ICollection<Plan> Planes { get; set; }
-    public ICollection<Viaje> Viajes { get; set; }
+    public string? nombre { get; set; }
+    public string? apellidos { get; set; }
+    public DateTime fecNacimiento { get; set; } = DateTime.Now;
+    public string? email { get; set; }
+    public string? contraseña { get; set; }
+
+    public virtual List<Plan>? planes { get; set; }
+    public virtual List<Viaje>? viajes { get; set; }
 }

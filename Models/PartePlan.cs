@@ -1,15 +1,22 @@
-namespace AventureoBack.Models
-{
-    public class PartePlan
-    {
-        public int idPartePlan { get; set; }
-        public int idPlan { get; set; }
-        public string Nombre { get; set; }
-        public string Ubicacion { get; set; }
-        public decimal Precio { get; set; }
-        public string Comentario { get; set; }
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-        
-        public Plan Plan { get; set; }
-    }
+namespace AventureoBack.Models;
+
+[Table("PartePlan")]
+public class PartePlan
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int idPartePlan { get; set; }
+
+    [ForeignKey("plan")]
+    public int idPlan { get; set; }
+
+    public string? nombre { get; set; }
+    public string? ubicacion { get; set; }
+    public decimal precio { get; set; }
+    public string? comentario { get; set; }
+
+    public virtual Plan? plan { get; set; }
 }

@@ -1,17 +1,24 @@
-namespace AventureoBack.Models
-{
-    public class Plan
-    {
-        public int idPlan { get; set; }
-        public int idUsuario { get; set; }
-        public string Lugar { get; set; }
-        public string Nombre { get; set; }
-        public int Duracion { get; set; }
-        public decimal PrecioEstimado { get; set; }
-        public int Valoracion { get; set; }
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-        
-        public Usuario Usuario { get; set; }
-        public ICollection<PartePlan> PartesPlan { get; set; }
-    }
+namespace AventureoBack.Models;
+
+[Table("Plan")]
+public class Plan
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int idPlan { get; set; }
+
+    [ForeignKey("usuario")]
+    public int idUsuario { get; set; }
+
+    public string? lugar { get; set; }
+    public string? nombre { get; set; }
+    public int duracion { get; set; }
+    public decimal precioEstimado { get; set; }
+    public int valoracion { get; set; }
+
+    public virtual Usuario? usuario { get; set; }
+    public virtual List<PartePlan>? partesPlan { get; set; }
 }

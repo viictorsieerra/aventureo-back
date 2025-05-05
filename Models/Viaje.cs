@@ -1,15 +1,22 @@
-namespace AventureoBack.Models
-{
-    public class Viaje
-    {
-        public int idViaje { get; set; }
-        public int idUsuario { get; set; }
-        public string Nombre { get; set; }
-        public decimal CantidadTotal { get; set; }
-        public int Personas { get; set; }
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-       
-        public Usuario Usuario { get; set; }
-        public ICollection<Gasto> Gastos { get; set; }
-    }
+namespace AventureoBack.Models;
+
+[Table("Viaje")]
+public class Viaje
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int idViaje { get; set; }
+
+    [ForeignKey("usuario")]
+    public int idUsuario { get; set; }
+
+    public string? nombre { get; set; }
+    public decimal cantidadTotal { get; set; }
+    public int personas { get; set; }
+
+    public virtual Usuario? usuario { get; set; }
+    public virtual List<Gasto>? gastos { get; set; }
 }
