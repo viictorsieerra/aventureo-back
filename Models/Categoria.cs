@@ -8,10 +8,10 @@ public class Categoria
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int idCategoria { get; set; }
+    public int IdCategoria { get; set; }
 
-    public string? nombre { get; set; }
-    public string? descripcion { get; set; }
+    public string? Nombre { get; set; }
+    public string? Descripcion { get; set; }
 
-    public virtual ICollection<Gasto>? gastos { get; set; }
+    public virtual ICollection<Gasto>? Gastos { get; set; }
 }
