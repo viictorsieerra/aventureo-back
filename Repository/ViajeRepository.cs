@@ -44,37 +44,42 @@ namespace AventureoBack.Repositories
         }
 
         public async Task<Viaje> GetByIdAsync(int idViaje)
+{
+    Viaje? viaje = null;
+
+    using (var connection = new SqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+        var query = "SELECT idViaje, idUsuario, nombre, cantidadTotal, personas FROM Viaje WHERE idViaje = @idViaje";
+
+        using (var command = new SqlCommand(query, connection))
         {
-            Viaje viaje = null;
+            command.Parameters.AddWithValue("@idViaje", idViaje);
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                await connection.OpenAsync();
-                var query = "SELECT idViaje, idUsuario, nombre, cantidadTotal, personas FROM Viaje WHERE idViaje = @idViaje";
-
-                using (var command = new SqlCommand(query, connection))
+                if (await reader.ReadAsync())
                 {
-                    command.Parameters.AddWithValue("@idViaje", idViaje);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    viaje = new Viaje
                     {
-                        if (await reader.ReadAsync())
-                        {
-                            viaje = new Viaje
-                            {
-                                idViaje = reader.GetInt32(0),
-                                idUsuario = reader.GetInt32(1),
-                                nombre = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                cantidadTotal = reader.GetDecimal(3),
-                                personas = reader.GetInt32(4)
-                            };
-                        }
-                    }
+                        idViaje = reader.GetInt32(0),
+                        idUsuario = reader.GetInt32(1),
+                        nombre = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        cantidadTotal = reader.GetDecimal(3),
+                        personas = reader.GetInt32(4)
+                    };
                 }
             }
-
-            return viaje;
         }
+    }
+
+    if (viaje == null)
+    {
+        throw new KeyNotFoundException($"No se encontró un Viaje con el id {idViaje}.");
+    }
+
+    return viaje;
+}
 
         public async Task AddAsync(Viaje viaje)
         {

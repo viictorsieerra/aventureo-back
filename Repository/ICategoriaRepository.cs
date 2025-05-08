@@ -1,5 +1,5 @@
 using AventureoBack.Models;
-using AventureoBack.Models;
+
 namespace Repositories;
 
 interface ICategoriaRepository

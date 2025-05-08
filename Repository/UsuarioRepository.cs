@@ -44,40 +44,44 @@ namespace AventureoBack.Repositories
             return usuarios;
         }
 
-        public async Task<Usuario> GetByIdAsync(int idUsuario)
+       public async Task<Usuario> GetByIdAsync(int idUsuario)
+{
+    Usuario? usuario = null;
+
+    using (var connection = new SqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+        var query = "SELECT idUsuario, nombre, apellidos, fecNacimiento, email, contrasena FROM Usuario WHERE idUsuario = @idUsuario";
+
+        using (var command = new SqlCommand(query, connection))
         {
-            Usuario usuario = null;
+            command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                await connection.OpenAsync();
-                var query = "SELECT idUsuario, nombre, apellidos, fecNacimiento, email, contrasena FROM Usuario WHERE idUsuario = @idUsuario";
-
-                using (var command = new SqlCommand(query, connection))
+                if (await reader.ReadAsync())
                 {
-                    command.Parameters.AddWithValue("@idUsuario", idUsuario);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    usuario = new Usuario
                     {
-                        if (await reader.ReadAsync())
-                        {
-                            usuario = new Usuario
-                            {
-                                idUsuario = reader.GetInt32(0),
-                                nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                apellidos = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                fecNacimiento = reader.GetDateTime(3),
-                                email = reader.IsDBNull(4) ? null : reader.GetString(4),
-                                contrasena = reader.IsDBNull(5) ? null : reader.GetString(5)
-                            };
-                        }
-                    }
+                        idUsuario = reader.GetInt32(0),
+                        nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        apellidos = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        fecNacimiento = reader.GetDateTime(3),
+                        email = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        contrasena = reader.IsDBNull(5) ? null : reader.GetString(5)
+                    };
                 }
             }
-
-            return usuario;
         }
+    }
 
+    if (usuario == null)
+    {
+        throw new KeyNotFoundException($"No se encontró un Usuario con el id {idUsuario}.");
+    }
+
+    return usuario;
+}
         public async Task AddAsync(Usuario usuario)
         {
             using (var connection = new SqlConnection(_connectionString))

@@ -45,41 +45,45 @@ namespace AventureoBack.Repositories
             return partesPlan;
         }
 
-        public async Task<PartePlan> GetByIdAsync(int idPartePlan)
+      public async Task<PartePlan> GetByIdAsync(int idPartePlan)
+{
+    PartePlan? partePlan = null;
+
+    using (var connection = new SqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+
+        var query = "SELECT idPartePlan, idPlan, nombre, ubicacion, precio, comentario FROM PartePlan WHERE idPartePlan = @idPartePlan";
+
+        using (var command = new SqlCommand(query, connection))
         {
-            PartePlan partePlan = null;
+            command.Parameters.AddWithValue("@idPartePlan", idPartePlan);
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                await connection.OpenAsync();
-
-                var query = "SELECT idPartePlan, idPlan, nombre, ubicacion, precio, comentario FROM PartePlan WHERE idPartePlan = @idPartePlan";
-
-                using (var command = new SqlCommand(query, connection))
+                if (await reader.ReadAsync())
                 {
-                    command.Parameters.AddWithValue("@idPartePlan", idPartePlan);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    partePlan = new PartePlan
                     {
-                        if (await reader.ReadAsync())
-                        {
-                            partePlan = new PartePlan
-                            {
-                                idPartePlan = reader.GetInt32(0),
-                                idPlan = reader.GetInt32(1),
-                                nombre = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                ubicacion = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                precio = reader.GetDecimal(4),
-                                comentario = reader.IsDBNull(5) ? null : reader.GetString(5)
-                            };
-                        }
-                    }
+                        idPartePlan = reader.GetInt32(0),
+                        idPlan = reader.GetInt32(1),
+                        nombre = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        ubicacion = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        precio = reader.GetDecimal(4),
+                        comentario = reader.IsDBNull(5) ? null : reader.GetString(5)
+                    };
                 }
             }
-
-            return partePlan;
         }
+    }
 
+    if (partePlan == null)
+    {
+        throw new KeyNotFoundException($"No se encontró un PartePlan con el id {idPartePlan}.");
+    }
+
+    return partePlan;
+}
         public async Task AddAsync(PartePlan partePlan)
         {
             using (var connection = new SqlConnection(_connectionString))

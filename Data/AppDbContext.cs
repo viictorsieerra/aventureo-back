@@ -51,9 +51,9 @@ public class AppDbContext : DbContext
 
         // Relaciones Categoria - Gasto
         modelBuilder.Entity<Categoria>()
-            .HasMany(c => c.gastos)
+            .HasMany(c => c.Gastos)
             .WithOne(g => g.categoria)
             .HasForeignKey(g => g.idCategoria)
-            .OnDelete(DeleteBehavior.Restrict); // evita que se borren gastos al borrar una categoría si no quieres cascada
+            .OnDelete(DeleteBehavior.Restrict); 
     }
 }

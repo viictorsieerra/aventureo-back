@@ -44,39 +44,44 @@ namespace AventureoBack.Repositories
             return gastos;
         }
 
-        public async Task<Gasto> GetByIdAsync(int idGasto)
+       public async Task<Gasto> GetByIdAsync(int idGasto)
+{
+    Gasto? gasto = null;
+
+    using (var connection = new SqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+
+        var query = "SELECT idGasto, idViaje, idCategoria, nombre, cantidad FROM Gasto WHERE idGasto = @idGasto";
+
+        using (var command = new SqlCommand(query, connection))
         {
-            Gasto gasto = null;
+            command.Parameters.AddWithValue("@idGasto", idGasto);
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                await connection.OpenAsync();
-
-                var query = "SELECT idGasto, idViaje, idCategoria, nombre, cantidad FROM Gasto WHERE idGasto = @idGasto";
-
-                using (var command = new SqlCommand(query, connection))
+                if (await reader.ReadAsync())
                 {
-                    command.Parameters.AddWithValue("@idGasto", idGasto);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    gasto = new Gasto
                     {
-                        if (await reader.ReadAsync())
-                        {
-                            gasto = new Gasto
-                            {
-                                idGasto = reader.GetInt32(0),
-                                idViaje = reader.GetInt32(1),
-                                idCategoria = reader.GetInt32(2),
-                                nombre = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                cantidad = reader.GetDecimal(4)
-                            };
-                        }
-                    }
+                        idGasto = reader.GetInt32(0),
+                        idViaje = reader.GetInt32(1),
+                        idCategoria = reader.GetInt32(2),
+                        nombre = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        cantidad = reader.GetDecimal(4)
+                    };
                 }
             }
-
-            return gasto;
         }
+    }
+
+    if (gasto == null)
+    {
+        throw new KeyNotFoundException($"No se encontró un gasto con el id {idGasto}.");
+    }
+
+    return gasto;
+}
 
         public async Task AddAsync(Gasto gasto)
         {

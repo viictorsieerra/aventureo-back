@@ -1,5 +1,7 @@
 using AventureoBack.Data;
+using AventureoBack.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AventureoDB");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// Registro de repositorios
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IGastoRepository, GastoRepository>();
+builder.Services.AddScoped<IPartePlanRepository, PartePlanRepository>();
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
 
 // Servicios de controllers
 builder.Services.AddControllers();

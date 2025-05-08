@@ -46,41 +46,46 @@ namespace AventureoBack.Repositories
             return planes;
         }
 
-        public async Task<Plan> GetByIdAsync(int idPlan)
+  public async Task<Plan> GetByIdAsync(int idPlan)
+{
+    Plan? plan = null;
+
+    using (var connection = new SqlConnection(_connectionString))
+    {
+        await connection.OpenAsync();
+
+        var query = "SELECT idPlan, idUsuario, lugar, nombre, duracion, precioEstimado, valoracion FROM Plan WHERE idPlan = @idPlan";
+
+        using (var command = new SqlCommand(query, connection))
         {
-            Plan plan = null;
+            command.Parameters.AddWithValue("@idPlan", idPlan);
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var reader = await command.ExecuteReaderAsync())
             {
-                await connection.OpenAsync();
-
-                var query = "SELECT idPlan, idUsuario, lugar, nombre, duracion, precioEstimado, valoracion FROM Plan WHERE idPlan = @idPlan";
-
-                using (var command = new SqlCommand(query, connection))
+                if (await reader.ReadAsync())
                 {
-                    command.Parameters.AddWithValue("@idPlan", idPlan);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    plan = new Plan
                     {
-                        if (await reader.ReadAsync())
-                        {
-                            plan = new Plan
-                            {
-                                idPlan = reader.GetInt32(0),
-                                idUsuario = reader.GetInt32(1),
-                                lugar = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                nombre = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                duracion = reader.GetInt32(4),
-                                precioEstimado = reader.GetDecimal(5),
-                                valoracion = reader.GetInt32(6)
-                            };
-                        }
-                    }
+                        idPlan = reader.GetInt32(0),
+                        idUsuario = reader.GetInt32(1),
+                        lugar = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        nombre = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        duracion = reader.GetInt32(4),
+                        precioEstimado = reader.GetDecimal(5),
+                        valoracion = reader.GetInt32(6)
+                    };
                 }
             }
-
-            return plan;
         }
+    }
+
+    if (plan == null)
+    {
+        throw new KeyNotFoundException($"No se encontró un Plan con el id {idPlan}.");
+    }
+
+    return plan;
+}
 
         public async Task AddAsync(Plan plan)
         {

@@ -42,7 +42,7 @@ namespace Repositories
             return categorias;
         }
 
-        public async Task<Categoria> GetByIdAsync(int idCategoria)
+        public async Task<Categoria?> GetByIdAsync(int idCategoria)
         {
             Categoria? categoria = null;
 
@@ -71,7 +71,7 @@ namespace Repositories
                 }
             }
 
-            return categoria;
+            return categoria; 
         }
 
         public async Task AddAsync(Categoria categoria)
@@ -143,6 +143,11 @@ namespace Repositories
                     await command.ExecuteNonQueryAsync();
                 }
             }
+        }
+
+        public Task<Categoria> GetByIdAsync(object idCategoria)
+        {
+            throw new NotImplementedException();
         }
     }
 }
