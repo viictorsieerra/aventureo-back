@@ -9,6 +9,4 @@ interface ICategoriaRepository
     Task AddAsync(Categoria categoria);
     Task UpdateAsync(Categoria categoria);
     Task DeleteAsync(int id);
-    Task InicializarDatosAsync();
-    Task<Categoria> GetByIdAsync(object idCategoria);
 }

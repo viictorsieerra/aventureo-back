@@ -1,7 +1,9 @@
 using AventureoBack.Data;
 using AventureoBack.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +14,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Registro de repositorios
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-builder.Services.AddScoped<IGastoRepository, GastoRepository>();
-builder.Services.AddScoped<IPartePlanRepository, PartePlanRepository>();
-builder.Services.AddScoped<IPlanRepository, PlanRepository>();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+
+builder.Services.AddScoped<IGastoRepository, GastoRepository>(provider =>
+new GastoRepository(connectionString));
+
+builder.Services.AddScoped<IPartePlanRepository, PartePlanRepository>(provider =>
+new PartePlanRepository(connectionString));
+builder.Services.AddScoped<IPlanRepository, PlanRepository>(provider =>
+new PlanRepository(connectionString));
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>(provider =>
+new UsuarioRepository(connectionString));
+builder.Services.AddScoped<IViajeRepository, ViajeRepository>(provider =>
+new ViajeRepository(connectionString));
 
 // Servicios de controllers
 builder.Services.AddControllers();
