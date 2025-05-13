@@ -1,3 +1,5 @@
+using Aventureo_Back.DTO;
+using Aventureo_Back.Repository.Interfaces;
 using AventureoBack.Models;
 using Repositories;
 using System;
@@ -32,31 +34,28 @@ namespace Services
         }
 
 
-        public async Task<Categoria> AddAsync(Categoria categoria)
+        public async Task<CreateCategoriaDTO> AddAsync(CreateCategoriaDTO categoria)
         {
-            await _repository.AddAsync(categoria);
+            Categoria newCategoria = new Categoria { Nombre = categoria.Nombre, Descripcion = categoria.Descripcion };
+            await _repository.CreateAsync(newCategoria);
             return categoria;
         }
 
 
-        public async Task<Categoria> UpdateAsync(Categoria updatedCategoria)
-        {/*
-            var existingCategoria = await _repository.GetByIdAsync(updatedCategoria.IdCategoria);
+        public async Task<Categoria> UpdateAsync(UpdateCategoriaDTO updatedCategoria)
+        {
+            Categoria? existingCategoria = await _repository.GetByIdAsync(updatedCategoria.IdCategoria);
 
             if (existingCategoria == null)
-            {
-                throw new Exception("NO SE HAN ENCONTRADO DATOS");
-            }
+                throw new Exception("Categoría no encontrada");
 
-            // Actualizar cuenta
-            existingCategoria.IdCategoria = updatedCategoria.IdCategoria;
-            existingCategoria._descripcion = updatedCategoria._descripcion;
+            existingCategoria.Nombre = updatedCategoria.Nombre;
+            existingCategoria.Descripcion = updatedCategoria.Descripcion;
 
-
-            await _repository.UpdateAsync(existingCategoria);*/
-            var existingCategoria = await _repository.GetByIdAsync(updatedCategoria.IdCategoria);
+            await _repository.UpdateAsync(existingCategoria);
             return existingCategoria;
         }
+
 
 
         public async Task DeleteAsync(int id)

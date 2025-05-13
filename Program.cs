@@ -1,3 +1,4 @@
+using Aventureo_Back.Repository.Interfaces;
 using AventureoBack.Data;
 using AventureoBack.Repositories;
 using Microsoft.EntityFrameworkCore;

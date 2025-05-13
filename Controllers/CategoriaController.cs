@@ -1,6 +1,7 @@
 using AventureoBack.Models;
 using Services;
 using Microsoft.AspNetCore.Mvc;
+using Aventureo_Back.DTO;
 
 namespace AventureoBack.Controllers
 {
@@ -51,7 +52,7 @@ namespace AventureoBack.Controllers
 
       
         [HttpPost]
-        public async Task<ActionResult<Categoria>> AddAsync([FromBody] Categoria categoria)
+        public async Task<ActionResult<CreateCategoriaDTO>> AddAsync([FromBody] CreateCategoriaDTO categoria)
         {
             if (categoria == null)
             {
@@ -61,7 +62,7 @@ namespace AventureoBack.Controllers
             try
             {
                 var newCategoria = await _categoriaService.AddAsync(categoria);
-                return CreatedAtAction(nameof(GetByIdAsync), new { idCategoria = newCategoria.IdCategoria }, newCategoria);
+                return Ok(newCategoria);
             }
             catch (Exception ex)
             {
@@ -70,13 +71,9 @@ namespace AventureoBack.Controllers
         }
 
      
-        [HttpPut("{idCategoria}")]
-        public async Task<ActionResult<Categoria>> UpdateAsync(int idCategoria, [FromBody] Categoria categoria)
+        [HttpPut]
+        public async Task<ActionResult<Categoria>> UpdateAsync([FromBody] UpdateCategoriaDTO categoria)
         {
-            if (categoria == null || categoria.IdCategoria != idCategoria)
-            {
-                return BadRequest(new { Message = "El objeto Categoria es inválido o el ID no coincide." });
-            }
 
             try
             {

@@ -1,6 +1,8 @@
-using Microsoft.Data.SqlClient;
 using AventureoBack.Models;
 using AventureoBack.Data;
+using Aventureo_Back.DTO;
+using Aventureo_Back.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
@@ -17,7 +19,7 @@ namespace Repositories
         {
             var categorias = new List<Categoria>();
 
-            categorias = _context.Categorias.ToList();
+            categorias =await _context.Categorias.ToListAsync();
 
             return categorias;
         }
@@ -26,50 +28,30 @@ namespace Repositories
         {
             Categoria? categoria = null;
 
-            categoria = _context.Categorias.FirstOrDefault(c => c.IdCategoria == idCategoria);
+            categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.IdCategoria == idCategoria);
 
             return categoria; 
         }
 
-        public async Task AddAsync(Categoria categoria)
+        public async Task<Categoria> CreateAsync(Categoria categoria)
         {
-            _context.AddAsync(categoria);
+            await _context.Categorias.AddAsync(categoria);
+            await _context.SaveChangesAsync();
+            return categoria;
         }
 
         public async Task UpdateAsync(Categoria categoria)
         {
-            /*
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                string query = "UPDATE Categoria SET Nombre = @Nombre, Descripcion = @Descripcion WHERE idCategoria = @idCategoria";
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@Nombre", categoria.Nombre);
-                    command.Parameters.AddWithValue("@Descripcion", categoria.Descripcion);
-                    command.Parameters.AddWithValue("@idCategoria", categoria.IdCategoria);
-
-                    await command.ExecuteNonQueryAsync();
-                }
-            }*/
+            _context.Categorias.Update(categoria);
+            await _context.SaveChangesAsync();
         }
 
+
         public async Task DeleteAsync(int idCategoria)
-        {/*
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                string query = "DELETE FROM Categoria WHERE idCategoria = @idCategoria";
-
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@idCategoria", idCategoria);
-
-                    await command.ExecuteNonQueryAsync();
-                }
-            }*/
+        {
+            Categoria? categoria = await GetByIdAsync(idCategoria);
+            _context.Categorias.Remove(categoria);
+            await _context.SaveChangesAsync();
         }
     }
 }
