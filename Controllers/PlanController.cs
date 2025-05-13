@@ -1,5 +1,5 @@
+using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Models;
-using AventureoBack.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AventureoBack.Controllers

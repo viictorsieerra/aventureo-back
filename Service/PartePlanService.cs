@@ -1,3 +1,4 @@
+using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Models;
 using AventureoBack.Repositories;
 

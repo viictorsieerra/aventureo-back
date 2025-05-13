@@ -1,5 +1,6 @@
+using Aventureo_Back.Repository.Interfaces;
+using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Models;
-using AventureoBack.Repositories;
 
 namespace AventureoBack.Services
 {
@@ -29,7 +30,7 @@ namespace AventureoBack.Services
 
         public async Task<Usuario> AddAsync(Usuario usuario)
         {
-            await _repository.AddAsync(usuario);
+            await _repository.CreateAsync(usuario);
             return usuario;
         }
 

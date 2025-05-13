@@ -55,5 +55,10 @@ public class AppDbContext : DbContext
             .WithOne(g => g.categoria)
             .HasForeignKey(g => g.idCategoria)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Email de usuario Unico
+        modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.email)
+            .IsUnique();
     }
 }

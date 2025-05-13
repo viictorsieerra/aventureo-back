@@ -1,7 +1,7 @@
 using Aventureo_Back.DTO;
 using AventureoBack.Models;
 
-namespace Services;
+namespace Aventureo_Back.Service.Interfaces;
 
 
 public interface ICategoriaService

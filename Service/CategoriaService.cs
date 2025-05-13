@@ -1,5 +1,6 @@
 using Aventureo_Back.DTO;
 using Aventureo_Back.Repository.Interfaces;
+using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Models;
 using Repositories;
 using System;

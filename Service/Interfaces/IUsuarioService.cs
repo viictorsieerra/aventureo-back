@@ -1,6 +1,6 @@
 using AventureoBack.Models;
 
-namespace AventureoBack.Services
+namespace Aventureo_Back.Service.Interfaces
 {
     public interface IUsuarioService
     {

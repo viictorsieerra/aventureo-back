@@ -1,141 +1,70 @@
 using AventureoBack.Models;
-using Microsoft.Data.SqlClient;
+using AventureoBack.Data;
+using Aventureo_Back.DTO;
+using Aventureo_Back.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace AventureoBack.Repositories
+namespace Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly string? _connectionString;
+        private readonly AppDbContext _context;
 
-        public UsuarioRepository(string? connectionString)
+        public UsuarioRepository(AppDbContext context)
         {
-            _connectionString = connectionString;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<List<Usuario>> GetAllAsync()
         {
-            var usuarios = new List<Usuario>();
+            var Usuarios = new List<Usuario>();
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "SELECT idUsuario, nombre, apellidos, fecNacimiento, email, contrasena FROM Usuario";
+            Usuarios = await _context.Usuarios.ToListAsync();
 
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        var usuario = new Usuario
-                        {
-                            idUsuario = reader.GetInt32(0),
-                            nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            apellidos = reader.IsDBNull(2) ? null : reader.GetString(2),
-                            fecNacimiento = reader.GetDateTime(3),
-                            email = reader.IsDBNull(4) ? null : reader.GetString(4),
-                            contrasena = reader.IsDBNull(5) ? null : reader.GetString(5)
-                        };
-
-                        usuarios.Add(usuario);
-                    }
-                }
-            }
-
-            return usuarios;
+            return Usuarios;
         }
 
-       public async Task<Usuario> GetByIdAsync(int idUsuario)
-{
-    Usuario? usuario = null;
-
-    using (var connection = new SqlConnection(_connectionString))
-    {
-        await connection.OpenAsync();
-        var query = "SELECT idUsuario, nombre, apellidos, fecNacimiento, email, contrasena FROM Usuario WHERE idUsuario = @idUsuario";
-
-        using (var command = new SqlCommand(query, connection))
+        public async Task<Usuario?> GetByIdAsync(int idUsuario)
         {
-            command.Parameters.AddWithValue("@idUsuario", idUsuario);
+            Usuario? Usuario = null;
 
-            using (var reader = await command.ExecuteReaderAsync())
-            {
-                if (await reader.ReadAsync())
-                {
-                    usuario = new Usuario
-                    {
-                        idUsuario = reader.GetInt32(0),
-                        nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        apellidos = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        fecNacimiento = reader.GetDateTime(3),
-                        email = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        contrasena = reader.IsDBNull(5) ? null : reader.GetString(5)
-                    };
-                }
-            }
+            Usuario = await _context.Usuarios.FirstOrDefaultAsync(c => c.idUsuario == idUsuario);
+
+            return Usuario;
         }
-    }
 
-    if (usuario == null)
-    {
-        throw new KeyNotFoundException($"No se encontró un Usuario con el id {idUsuario}.");
-    }
-
-    return usuario;
-}
-        public async Task AddAsync(Usuario usuario)
+        public async Task<Usuario> CreateAsync(Usuario Usuario)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "INSERT INTO Usuario (nombre, apellidos, fecNacimiento, email, contrasena) VALUES (@nombre, @apellidos, @fecNacimiento, @email, @contrasena)";
-
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@nombre", (object?)usuario.nombre ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@apellidos", (object?)usuario.apellidos ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@fecNacimiento", usuario.fecNacimiento);
-                    command.Parameters.AddWithValue("@email", (object?)usuario.email ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@contrasena", (object?)usuario.contrasena ?? DBNull.Value);
-
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
+            await _context.Usuarios.AddAsync(Usuario);
+            await _context.SaveChangesAsync();
+            return Usuario;
         }
 
-        public async Task UpdateAsync(Usuario usuario)
+        public async Task UpdateAsync(Usuario Usuario)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "UPDATE Usuario SET nombre = @nombre, apellidos = @apellidos, fecNacimiento = @fecNacimiento, email = @email, contrasena = @contrasena WHERE idUsuario = @idUsuario";
-
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@nombre", (object?)usuario.nombre ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@apellidos", (object?)usuario.apellidos ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@fecNacimiento", usuario.fecNacimiento);
-                    command.Parameters.AddWithValue("@email", (object?)usuario.email ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@contrasena", (object?)usuario.contrasena ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@idUsuario", usuario.idUsuario);
-
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
+            _context.Usuarios.Update(Usuario);
+            await _context.SaveChangesAsync();
         }
+
 
         public async Task DeleteAsync(int idUsuario)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "DELETE FROM Usuario WHERE idUsuario = @idUsuario";
+            Usuario? Usuario = await GetByIdAsync(idUsuario);
+            _context.Usuarios.Remove(Usuario);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<UserOutDTO> GetUserFromCredentials(LoginDTO login)
+        {
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@idUsuario", idUsuario);
-                    await command.ExecuteNonQueryAsync();
-                }
+            var user = await _context.Usuarios.FirstOrDefaultAsync(us => us.email == login.Email);
+
+            if (user == null) throw new KeyNotFoundException("NO SE HA ENCONTRADO UN USUARIO REGISTRADO CON ESTE CORREO");
+
+            if(login.Contrasena != user.contrasena)
+            {
+                throw new KeyNotFoundException("CONTRASEÑA INCORRECTA");
             }
+            return new UserOutDTO { Email = login.Email, IdUsuario = user.idUsuario };
         }
     }
 }

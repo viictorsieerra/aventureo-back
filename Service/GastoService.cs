@@ -1,3 +1,5 @@
+using Aventureo_Back.Repository.Interfaces;
+using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Models;
 using AventureoBack.Repositories;
 
@@ -29,7 +31,7 @@ namespace AventureoBack.Services
 
         public async Task<Gasto> AddAsync(Gasto gasto)
         {
-            await _repository.AddAsync(gasto);
+            await _repository.CreateAsync(gasto);
             return gasto;
         }
 
