@@ -9,8 +9,9 @@
     {
         public int? IdUsuario { get; set; }
         public string? Email { get; set; }
+        public bool? RolAdmin {  get; set; }
     }
-    public record class CreateUserDTO
+    public record class RegisterUserDTO
     {
         public string? nombre { get; set; }
         public string? apellidos { get; set; }

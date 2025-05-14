@@ -55,7 +55,6 @@ namespace Repositories
         }
         public async Task<UserOutDTO> GetUserFromCredentials(LoginDTO login)
         {
-
             var user = await _context.Usuarios.FirstOrDefaultAsync(us => us.email == login.Email);
 
             if (user == null) throw new KeyNotFoundException("NO SE HA ENCONTRADO UN USUARIO REGISTRADO CON ESTE CORREO");
@@ -65,6 +64,32 @@ namespace Repositories
                 throw new KeyNotFoundException("CONTRASEÑA INCORRECTA");
             }
             return new UserOutDTO { Email = login.Email, IdUsuario = user.idUsuario };
+        }
+
+        public async Task<UserOutDTO> RegisterUserFromCredentials(RegisterUserDTO userDTO)
+        {
+            Usuario user = new Usuario
+            {
+                nombre = userDTO.nombre,
+                apellidos = userDTO.apellidos,
+                email = userDTO.email,
+                contrasena = userDTO.contrasena,
+                fecNacimiento = userDTO.fecNacimiento
+
+            };
+            await _context.Usuarios.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            UserOutDTO? userOut = await _context.Usuarios
+                .Select(u =>
+                new UserOutDTO
+                {
+                    IdUsuario = u.idUsuario,
+                    Email = u.email,
+                    RolAdmin = u.RolAdmin
+                }).FirstOrDefaultAsync(u => u.Email == user.email);
+
+            return userOut;
         }
     }
 }

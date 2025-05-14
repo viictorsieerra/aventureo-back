@@ -1,4 +1,5 @@
 using Aventureo_Back.Repository.Interfaces;
+using Aventureo_Back.Service;
 using Aventureo_Back.Service.Interfaces;
 using AventureoBack.Data;
 using AventureoBack.Repositories;
@@ -21,6 +22,8 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 builder.Services.AddScoped<IGastoRepository, GastoRepository>();
 builder.Services.AddScoped<IGastoService, GastoService>();
+
+builder.Services.AddScoped<IJwtAuthService, JwtAuthService>();
 
 builder.Services.AddScoped<IPartePlanRepository, PartePlanRepository>(provider =>
 new PartePlanRepository(connectionString));

@@ -6,7 +6,7 @@ namespace Aventureo_Back.Service.Interfaces
     {
         Task<string> GenerateTokenAsync(UserOutDTO user);
         Task<string> Login(LoginDTO login);
-        Task<string> RegisterUser(CreateUserDTO user);
+        Task<string> RegisterUser(RegisterUserDTO user);
         Task<string> HashPassword(string password);
     }
 }
