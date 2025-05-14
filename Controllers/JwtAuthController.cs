@@ -16,7 +16,7 @@ namespace Aventureo_Back.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult> Login(LoginDTO cuenta)
+        public async Task<ActionResult<TokenDto>> Login(LoginDTO cuenta)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Aventureo_Back.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                string token = await _service.Login(cuenta);
+                var token = await _service.Login(cuenta);
                 return Ok(token);
             }
             catch (KeyNotFoundException ex)
@@ -38,7 +38,7 @@ namespace Aventureo_Back.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult> Register(RegisterUserDTO user)
+        public async Task<ActionResult<TokenDto>> Register(RegisterUserDTO user)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Aventureo_Back.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                string token = await _service.RegisterUser(user);
+                var token = await _service.RegisterUser(user);
                 return Ok(token);
             }
             catch (KeyNotFoundException ex)

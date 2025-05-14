@@ -20,7 +20,7 @@ namespace Aventureo_Back.Service
             _repository = repository;
         }
 
-        public async Task<string> GenerateTokenAsync(UserOutDTO user)
+        public async Task<TokenDto> GenerateTokenAsync(UserOutDTO user)
         {
             var key = Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
@@ -40,17 +40,17 @@ namespace Aventureo_Back.Service
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             string tokenString = tokenHandler.WriteToken(token);
 
-            return tokenString;
+            return new TokenDto { Value = tokenString};
         }
 
-        public async Task<string> Login(LoginDTO login)
+        public async Task<TokenDto> Login(LoginDTO login)
         {
             login.Contrasena = await HashPassword(login.Contrasena);
             UserOutDTO user = await _repository.GetUserFromCredentials(login);
             return await GenerateTokenAsync(user);
         }
 
-        public async Task<string> RegisterUser(RegisterUserDTO registerUser)
+        public async Task<TokenDto> RegisterUser(RegisterUserDTO registerUser)
         {
             registerUser.contrasena = await HashPassword(registerUser.contrasena);
             UserOutDTO user = await _repository.RegisterUserFromCredentials(registerUser);

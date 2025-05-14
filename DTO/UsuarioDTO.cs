@@ -19,4 +19,9 @@
         public string? email { get; set; }
         public string? contrasena { get; set; }
     }
+
+    public record class TokenDto
+    {
+        public string? Value { get; set; }
+    }
 }
