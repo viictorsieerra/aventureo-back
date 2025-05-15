@@ -15,14 +15,14 @@ namespace Aventureo_Back.Migrations
                 name: "Categoria",
                 columns: table => new
                 {
-                    idCategoria = table.Column<int>(type: "int", nullable: false)
+                    IdCategoria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categoria", x => x.idCategoria);
+                    table.PrimaryKey("PK_Categoria", x => x.IdCategoria);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,8 +34,9 @@ namespace Aventureo_Back.Migrations
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     apellidos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    contrasena = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    contrasena = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RolAdmin = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,7 +130,7 @@ namespace Aventureo_Back.Migrations
                         name: "FK_Gasto_Categoria_idCategoria",
                         column: x => x.idCategoria,
                         principalTable: "Categoria",
-                        principalColumn: "idCategoria",
+                        principalColumn: "IdCategoria",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Gasto_Viaje_idViaje",
@@ -158,6 +159,12 @@ namespace Aventureo_Back.Migrations
                 name: "IX_Plan_idUsuario",
                 table: "Plan",
                 column: "idUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_email",
+                table: "Usuario",
+                column: "email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Viaje_idUsuario",

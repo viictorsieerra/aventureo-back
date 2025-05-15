@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aventureo_Back.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250514170911_EmailUniqueConstraint")]
-    partial class EmailUniqueConstraint
+    [Migration("20250515170647_migracionInicial")]
+    partial class migracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
