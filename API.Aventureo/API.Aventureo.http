@@ -1,0 +1,6 @@
+@API.Aventureo_HostAddress = http://localhost:5039
+
+GET {{API.Aventureo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
