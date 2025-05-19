@@ -1,3 +1,4 @@
+using Aventureo_Back.Models;
 using Aventureo_Back.Repository.Interfaces;
 using Aventureo_Back.Service;
 using Aventureo_Back.Service.Interfaces;
@@ -59,6 +60,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseMiddleware<Middleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
