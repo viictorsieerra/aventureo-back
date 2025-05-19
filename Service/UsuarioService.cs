@@ -30,7 +30,7 @@ namespace AventureoBack.Services
 
         public async Task<Usuario> AddAsync(Usuario usuario)
         {
-            await _repository.CreateAsync(usuario);
+            await _repository.AddAsync(usuario);
             return usuario;
         }
 

@@ -33,7 +33,7 @@ namespace Repositories
             return Usuario;
         }
 
-        public async Task<Usuario> CreateAsync(Usuario Usuario)
+        public async Task<Usuario> AddAsync(Usuario Usuario)
         {
             await _context.Usuarios.AddAsync(Usuario);
             await _context.SaveChangesAsync();

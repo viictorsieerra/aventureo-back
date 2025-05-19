@@ -28,12 +28,12 @@ namespace Repositories
         {
             Categoria? categoria = null;
 
-            categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.IdCategoria == idCategoria);
+            categoria = await _context.Categorias.Where(c => c.IdCategoria == idCategoria).FirstOrDefaultAsync();
 
             return categoria; 
         }
 
-        public async Task<Categoria> CreateAsync(Categoria categoria)
+        public async Task<Categoria> AddAsync(Categoria categoria)
         {
             await _context.Categorias.AddAsync(categoria);
             await _context.SaveChangesAsync();

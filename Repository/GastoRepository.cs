@@ -33,7 +33,7 @@ namespace Repositories
             return gasto;
         }
 
-        public async Task<Gasto> CreateAsync(Gasto gasto)
+        public async Task<Gasto> AddAsync(Gasto gasto)
         {
             await _context.Gastos.AddAsync(gasto);
             await _context.SaveChangesAsync();

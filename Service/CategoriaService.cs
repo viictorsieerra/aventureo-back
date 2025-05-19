@@ -38,7 +38,7 @@ namespace Services
         public async Task<CreateCategoriaDTO> AddAsync(CreateCategoriaDTO categoria)
         {
             Categoria newCategoria = new Categoria { Nombre = categoria.Nombre, Descripcion = categoria.Descripcion };
-            await _repository.CreateAsync(newCategoria);
+            await _repository.AddAsync(newCategoria);
             return categoria;
         }
 

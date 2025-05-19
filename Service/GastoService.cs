@@ -31,7 +31,7 @@ namespace AventureoBack.Services
 
         public async Task<Gasto> AddAsync(Gasto gasto)
         {
-            await _repository.CreateAsync(gasto);
+            await _repository.AddAsync(gasto);
             return gasto;
         }
 
