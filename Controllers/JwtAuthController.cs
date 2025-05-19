@@ -9,12 +9,12 @@ namespace Aventureo_Back.Controllers
     [ApiController]
     public class JwtAuthController : ControllerBase
     {
-        private readonly IJwtAuthService? _service;
+        private readonly IJwtAuthService _service;
 
-        public JwtAuthController(IJwtAuthService? service) {
+        public JwtAuthController(IJwtAuthService service)
+        {
             _service = service;
         }
-
         [HttpPost("Login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDTO cuenta)
         {
@@ -24,18 +24,20 @@ namespace Aventureo_Back.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+
                 var token = await _service.Login(cuenta);
                 return Ok(token);
             }
             catch (KeyNotFoundException ex)
             {
-                return Unauthorized(ex);
+                return Unauthorized(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error al generar el token");
+                return BadRequest(new { message = "Error al generar el token", details = ex.Message });
             }
         }
+
 
         [HttpPost("Register")]
         public async Task<ActionResult<TokenDto>> Register(RegisterUserDTO user)

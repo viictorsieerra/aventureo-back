@@ -25,6 +25,7 @@ builder.Services.AddScoped<IGastoService, GastoService>();
 
 builder.Services.AddScoped<IJwtAuthService, JwtAuthService>();
 
+
 builder.Services.AddScoped<IPartePlanRepository, PartePlanRepository>(provider =>
 new PartePlanRepository(connectionString));
 builder.Services.AddScoped<IPlanRepository, PlanRepository>(provider =>
@@ -32,6 +33,7 @@ new PlanRepository(connectionString));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IViajeRepository, ViajeRepository>(provider =>
 new ViajeRepository(connectionString));
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 // Servicios de controllers
 builder.Services.AddControllers();

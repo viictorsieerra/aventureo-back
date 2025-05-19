@@ -40,15 +40,20 @@ namespace Aventureo_Back.Service
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             string tokenString = tokenHandler.WriteToken(token);
 
-            return new TokenDto { Value = tokenString};
+            return new TokenDto { Value = tokenString };
         }
 
         public async Task<TokenDto> Login(LoginDTO login)
         {
             login.Contrasena = await HashPassword(login.Contrasena);
             UserOutDTO user = await _repository.GetUserFromCredentials(login);
+
+            if (user == null)
+                throw new KeyNotFoundException("Usuario o contraseña incorrectos");
+
             return await GenerateTokenAsync(user);
         }
+
 
         public async Task<TokenDto> RegisterUser(RegisterUserDTO registerUser)
         {
