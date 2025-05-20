@@ -58,7 +58,7 @@ namespace Application.Aventureo.Services
 
         public async Task<TokenDto> RegisterUser(RegisterUserDTO registerUser)
         {
-            registerUser.contrasena = await HashPassword(registerUser.contrasena);
+            registerUser.Contrasena = await HashPassword(registerUser.Contrasena);
             UserOutDTO user = await _repository.RegisterUserFromCredentials(registerUser);
             return await GenerateTokenAsync(user);
         }

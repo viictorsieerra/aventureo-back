@@ -18,36 +18,23 @@ namespace API.Aventureo.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDTO cuenta)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+            if (!ModelState.IsValid)
+                throw new Exception("ModelState is not valid");
 
-                var token = await _service.Login(cuenta);
-                return Ok(token);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = "Error al generar el token", details = ex.Message });
-            }
+            var token = await _service.Login(cuenta);
+            return Ok(token);
+
         }
 
 
         [HttpPost("Register")]
         public async Task<ActionResult<TokenDto>> Register(RegisterUserDTO user)
         {
-                if (!ModelState.IsValid)
-                {
+            if (!ModelState.IsValid)
                 throw new Exception("ModelState is not valid");
-                }
-                var token = await _service.RegisterUser(user);
-                return Ok(token);
+
+            var token = await _service.RegisterUser(user);
+            return Ok(token);
         }
 
     }

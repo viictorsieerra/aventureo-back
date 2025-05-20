@@ -36,11 +36,11 @@ namespace Infraestructure.Aventureo.Repository.Entities
         {
             Usuario user = new Usuario
             {
-                nombre = userDTO.nombre,
-                apellidos = userDTO.apellidos,
-                email = userDTO.email,
-                contrasena = userDTO.contrasena,
-                fecNacimiento = userDTO.fecNacimiento
+                nombre = userDTO.Nombre,
+                apellidos = userDTO.Apellidos,
+                email = userDTO.Email,
+                contrasena = userDTO.Contrasena,
+                fecNacimiento = userDTO.FecNacimiento
 
             };
             await _context.Usuarios.AddAsync(user);
@@ -53,7 +53,7 @@ namespace Infraestructure.Aventureo.Repository.Entities
                     IdUsuario = u.idUsuario,
                     Email = u.email,
                     RolAdmin = u.RolAdmin
-                }).FirstOrDefaultAsync(u => u.Email == user.email);
+                }).Where(u => u.Email == user.email).FirstOrDefaultAsync();
 
             return userOut;
         }
