@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Aventureo.Dto;
-using Core.Aventureo.DTO;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 
 namespace Core.Aventureo.Interfaces.Service

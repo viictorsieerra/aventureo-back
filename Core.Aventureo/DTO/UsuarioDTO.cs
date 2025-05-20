@@ -1,4 +1,4 @@
-﻿namespace Core.Aventureo.Dto
+﻿namespace Core.Aventureo.DTO
 {
     public record class LoginDTO
     {

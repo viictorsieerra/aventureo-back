@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Aventureo.Dto;
+using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;

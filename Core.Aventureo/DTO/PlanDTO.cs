@@ -23,4 +23,5 @@ namespace Core.Aventureo.DTO
         public int Duracion { get; set; } = 0;
         public decimal PrecioEstimado { get; set; }
         public int Valoracion { get; set; } = 1;
+    }
 }

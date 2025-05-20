@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Core.Aventureo.Dto;
+using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
 using Microsoft.Extensions.Configuration;

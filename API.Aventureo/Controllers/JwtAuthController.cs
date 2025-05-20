@@ -1,4 +1,4 @@
-﻿using Core.Aventureo.Dto;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

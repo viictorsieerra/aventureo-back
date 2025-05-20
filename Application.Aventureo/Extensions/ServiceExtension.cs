@@ -18,6 +18,8 @@ namespace Application.Aventureo.Extensions
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IViajeService, ViajeService>();
+            services.AddScoped<IPlanService, PlanService>();
+            services.AddScoped<IPartePlanService, PartePlanService>();
         }
     }
 }

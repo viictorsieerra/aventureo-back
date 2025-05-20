@@ -13,7 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("AventureoDB");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Registro de repositorios
+// Añadido de capas
 
 builder.Services.AddInfraestructureLayer();
 builder.Services.AddApplicationLayer();
