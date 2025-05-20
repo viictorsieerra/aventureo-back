@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Aventureo_Back.Models
+namespace API.Aventureo.Models
 {
     public class Middleware
     {

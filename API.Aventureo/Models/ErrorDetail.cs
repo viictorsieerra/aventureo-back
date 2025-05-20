@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aventureo_Back.Models
+namespace API.Aventureo.Models
 {
     public class ErrorDetail
     {
