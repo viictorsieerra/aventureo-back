@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddInfraestructureLayer();
 builder.Services.AddApplicationLayer();
+builder.Services.AddExternalCommunication(builder.Configuration);
 
 // Servicios de controllers
 builder.Services.AddControllers();
