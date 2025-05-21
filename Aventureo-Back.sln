@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{51DD6229-463E-45E7-813E-B84B4582E2D1}"
 EndProject
@@ -12,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{01E61863-A7E5-4313-99BB-494C8122F34D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{77245CA9-8154-47E5-8F99-8AA2B1423B4C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{77245CA9-8154-47E5-8F99-8AA2B1423B4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Aventureo", "Application.Aventureo\Application.Aventureo.csproj", "{C81CBD4F-9FA3-7417-68CE-9D5F1FCCCA15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Aventureo", "Core.Aventureo\Core.Aventureo.csproj", "{46E86BB1-EB4E-4127-A37A-8107DD84E7D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.Aventureo", "Infraestructure.Aventureo\Infraestructure.Aventureo.csproj", "{12457A28-5A3B-45DE-B4C7-56606B98518E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Aventureo", "Infrastructure.Aventureo\Infrastructure.Aventureo.csproj", "{12457A28-5A3B-45DE-B4C7-56606B98518E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
