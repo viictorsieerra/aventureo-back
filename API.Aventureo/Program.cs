@@ -1,3 +1,4 @@
+using API.Aventureo.Extensions;
 using API.Aventureo.Models;
 using Application.Aventureo.Extensions;
 using Application.Aventureo.Services;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddInfraestructureLayer();
 builder.Services.AddApplicationLayer();
 builder.Services.AddExternalCommunication(builder.Configuration);
+builder.Services.AddJwtSecurity(builder.Configuration);
 
 // Servicios de controllers
 builder.Services.AddControllers();
@@ -46,6 +48,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseMiddleware<Middleware>();
-app.UseAuthorization();
 app.MapControllers();
 app.Run();

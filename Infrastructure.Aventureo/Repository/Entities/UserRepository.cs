@@ -16,7 +16,7 @@ namespace Infraestructure.Aventureo.Repository.Entities
         }
         public async Task<UserOutDTO> GetUserFromCredentials(LoginDTO login)
         {
-            var user = await _context.Usuarios.FirstOrDefaultAsync(us => us.email == login.Email);
+            var user = await _context.Usuarios.Where(u => u.email == login.Email).FirstOrDefaultAsync();
 
             if (user == null)
                 throw new KeyNotFoundException("NO SE HA ENCONTRADO UN USUARIO REGISTRADO CON ESTE CORREO");
@@ -24,7 +24,7 @@ namespace Infraestructure.Aventureo.Repository.Entities
             if (login.Contrasena != user.contrasena)
                 throw new UnauthorizedAccessException("CONTRASEÑA INCORRECTA");
           
-            return new UserOutDTO { Email = login.Email, IdUsuario = user.idUsuario };
+            return new UserOutDTO { Email = login.Email, IdUsuario = user.idUsuario, RolAdmin = user.RolAdmin };
         }
 
         public async Task<UserOutDTO> RegisterUserFromCredentials(RegisterUserDTO userDTO)

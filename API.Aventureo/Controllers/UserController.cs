@@ -37,7 +37,7 @@ namespace API.Aventureo.Controllers
             return Ok(Usuario);
 
         }
-        [HttpGet("/Auth")]
+        [HttpGet("Auth")]
         public async Task<ActionResult<Usuario>> GetByToken()
         {
             Usuario? user = await _service.GetByToken(User);

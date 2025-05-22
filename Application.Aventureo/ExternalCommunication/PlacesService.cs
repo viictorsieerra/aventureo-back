@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.ExternalCommunication;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,13 @@ namespace Application.Aventureo.ExternalCommunication
             if (query == null)
                 throw new ArgumentNullException("QUERY MAL RECIBIDA");
 
+            string filePath = "ejemploPlaces.json";
+            string responseBody = File.ReadAllText(filePath);
+            RootPlaces data = JsonConvert.DeserializeObject<RootPlaces>(responseBody);
+            List<ResultPlaces> result = data.results;
+
+            return result;
+            /*
             using (HttpClient client = new HttpClient())
             {
                 url+= $"json?location={query.location}&radius={query.radius}&type=lodging&key={apiKey}";
@@ -44,6 +52,7 @@ namespace Application.Aventureo.ExternalCommunication
                 return result;
 
             }
+            */
         }
     }
 }

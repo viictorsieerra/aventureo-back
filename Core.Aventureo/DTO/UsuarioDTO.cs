@@ -9,7 +9,7 @@
     {
         public int? IdUsuario { get; set; }
         public string? Email { get; set; }
-        public bool? RolAdmin {  get; set; }
+        public bool? RolAdmin {  get; set; } = false;
     }
     public record class RegisterUserDTO
     {
