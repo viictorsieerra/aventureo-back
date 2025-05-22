@@ -1,25 +1,42 @@
+// ChatController.cs
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/chat")]
 public class ChatController : ControllerBase
 {
-    private readonly ChatService _chatService;
-
-    public ChatController(ChatService chatService)
+    private readonly IAiService _aiService;
+    
+    public ChatController(IAiService aiService)
     {
-        _chatService = chatService;
+        _aiService = aiService;
     }
-
-    [HttpPost("mensaje")]
-    public async Task<IActionResult> EnviarMensaje([FromBody] MensajeDTO mensaje)
+    
+    [HttpPost("ask")]
+    public async Task<IActionResult> AskQuestion([FromBody] ChatRequest request)
     {
-        var respuesta = await _chatService.ObtenerRespuestaIA(mensaje.Texto);
-        return Ok(new { respuesta });
+        try
+        {
+            // Puedes añadir contexto específico para tu dominio (turismo)
+            string prompt = $"Eres un asistente de viajes especializado en España. Responde de forma concisa y útil. {request.Question}";
+            
+            var response = await _aiService.GetResponseAsync(prompt);
+            return Ok(new ChatResponse { Answer = response });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error al procesar la pregunta: {ex.Message}");
+        }
     }
 }
 
-public class MensajeDTO
+// Modelos
+public class ChatRequest
 {
-    public string Texto { get; set; }
+    public string Question { get; set; }
+}
+
+public class ChatResponse
+{
+    public string Answer { get; set; }
 }

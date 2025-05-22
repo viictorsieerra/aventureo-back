@@ -40,7 +40,8 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
 // ChatService (tu servicio para comunicarte con la IA)
-builder.Services.AddScoped<ChatService>();
+builder.Services.AddHttpClient<IAiService, OpenAIService>();
+builder.Services.AddScoped<IAiService, OpenAIService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
