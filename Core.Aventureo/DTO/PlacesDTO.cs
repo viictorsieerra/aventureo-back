@@ -8,7 +8,7 @@ namespace Core.Aventureo.DTO
 {
     public record class QueryPlaces
     {
-        public string location { get; set; } // Coordenadas de Barcelona
+        public string location { get; set; }
         public int radius { get; set; } = 5000; // En metros
     }
     public record class ResultPlaces

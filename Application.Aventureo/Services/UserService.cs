@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Aventureo.DTO;
@@ -28,6 +29,23 @@ namespace Application.Aventureo.Services
             Usuario user = await _repository.GetByIdAsync(idUsuario);
 
             return user;
+        }
+
+        public async Task<Usuario?> GetByToken(ClaimsPrincipal claimUser)
+        {
+            var id = claimUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (id == null)
+                throw new Exception("NO SE ENCUENTRA EL ID DEL USUARIO A TRAVÉS DEL TOKEN");
+
+            int idUsuario;
+
+            if (!int.TryParse(id.Value, out idUsuario))
+                throw new Exception("Fallo al cambiar la ID");
+
+            Usuario? user = await _repository.GetByIdAsync(idUsuario);
+
+            return user;
+
         }
 
         public async Task<AddModUserDTO> AddAsync(AddModUserDTO UsuarioDTO)

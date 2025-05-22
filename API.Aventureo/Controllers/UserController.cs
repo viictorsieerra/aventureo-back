@@ -1,4 +1,5 @@
-﻿using Core.Aventureo.DTO;
+﻿using System.Security.Claims;
+using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,13 @@ namespace API.Aventureo.Controllers
 
             return Ok(Usuario);
 
+        }
+        [HttpGet("/Auth")]
+        public async Task<ActionResult<Usuario>> GetByToken()
+        {
+            Usuario? user = await _service.GetByToken(User);
+
+            return Ok(user);
         }
 
 
