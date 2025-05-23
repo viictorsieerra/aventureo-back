@@ -7,7 +7,6 @@ using AventureoBack.Services;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Services;
-using TuProyecto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +39,9 @@ builder.Services.AddControllers();
 // HttpClient (para servicios externos como OpenAI)
 builder.Services.AddHttpClient();
 
-builder.Services.AddSingleton<OpenAIService>();
-
+// ChatService (tu servicio para comunicarte con la IA)
+builder.Services.AddHttpClient<IAiService, OpenAIService>();
+builder.Services.AddScoped<IAiService, OpenAIService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
