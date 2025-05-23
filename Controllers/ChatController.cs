@@ -1,25 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
+using TuProyecto.Services;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ChatController : ControllerBase
+namespace TuProyecto.Controllers
 {
-    private readonly ChatService _chatService;
-
-    public ChatController(ChatService chatService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ChatController : ControllerBase
     {
-        _chatService = chatService;
+        private readonly OpenAIService _openAIService;
+
+        public ChatController(OpenAIService openAIService)
+        {
+            _openAIService = openAIService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] UserMessage userMessage)
+        {
+            var reply = await _openAIService.GetChatResponse(userMessage.Message);
+            return Ok(new { reply });
+        }
     }
 
-    [HttpPost("mensaje")]
-    public async Task<IActionResult> EnviarMensaje([FromBody] MensajeDTO mensaje)
+    public class UserMessage
     {
-        var respuesta = await _chatService.ObtenerRespuestaIA(mensaje.Texto);
-        return Ok(new { respuesta });
+        public required string Message { get; set; }
     }
-}
-
-public class MensajeDTO
-{
-    public string Texto { get; set; }
 }
