@@ -1,24 +1,24 @@
-// ChatController.cs
-using Microsoft.AspNetCore.Mvc;
-using TuProyecto.Services;
 
-namespace TuProyecto.Controllers
+using Microsoft.AspNetCore.Mvc;
+using AventureoBack.Services;
+
+namespace AventureoBack.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class ChatController : ControllerBase
     {
-        private readonly OpenAIService _openAIService;
+        private readonly IAiService _aiService;
 
-        public ChatController(OpenAIService openAIService)
+        public ChatController(IAiService aiService)
         {
-            _openAIService = openAIService;
+            _aiService = aiService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserMessage userMessage)
         {
-            var reply = await _openAIService.GetChatResponse(userMessage.Message);
+            var reply = await _aiService.GetResponseAsync(userMessage.Message);
             return Ok(new { reply });
         }
     }
