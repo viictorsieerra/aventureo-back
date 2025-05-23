@@ -1,0 +1,36 @@
+{
+    "id": "chatcmpl-BaN59KfeFJahivcHbgJvsltyF5nQl",
+    "object": "chat.completion",
+    "created": 1748008235,
+    "model": "gpt-4o-2024-08-06",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "La zona Cantábrica de España es una región fascinante con una mezcla de paisajes verdes, costas espectaculares y una rica herencia cultural y gastronómica. Aquí te dejo algunas recomendaciones de lugares y actividades que podrías disfrutar:\n\n1. **Bilbao**: Visita el Museo Guggenheim, no solo por su impresionante colección de arte contemporáneo, sino también por su arquitectura modernista. Pasea por el Casco Viejo para disfrutar de los bares de pintxos.\n\n2. **Santander**: Explora la Playa del Sardinero y el Palacio de la Magdalena, situado en una península que ofrece vistas inmejorables del mar. Visita también el Centro Botín, un centro de arte y cultura moderna.\n\n3. **San Sebastián**: Famosa por su hermosa bahía de La Concha. No te pierdas el casco antiguo, donde puedes probar los típicos pintxos en sus numerosos bares. También, si te gusta el surf, la Playa de Zurriola es ideal.\n\n4. **Santillana del Mar**: Uno de los pueblos más bonitos de España. Sus calles empedradas y su arquitectura medieval te transportarán a otra época. Cerca se encuentran las famosas Cuevas de Altamira.\n\n5. **Picos de Europa**: Si te gusta el senderismo, este parque nacional es un paraíso. Realiza la Ruta del Cares o visita el imponente Desfiladero de la Hermida. No olvides probar el queso de Cabrales, típico de la región.\n\n6. **Llanes**: Un bonito puerto pesquero en Asturias con numerosas playas y acantilados impresionantes. El casco histórico es encantador y cuenta con varias actividades culturales a lo largo del año.\n\n7. **Oviedo y Gijón**: En Oviedo, visita la Catedral de San Salvador y el Mercado El Fontán. Gijón, por su parte, ofrece un bonito paseo marítimo y playas atrayentes, además del Jardín Botánico Atlántico.\n\n8. **Comillas y Gaudí**: En Comillas, destaca la Universidad Pontificia y El Capricho de Gaudí, una de las pocas obras del arquitecto fuera de Cataluña.\n\n9. **Parque Natural de las Marismas de Santoña**: Ideal para los amantes del avistamiento de aves. Este espacio protegido es crucial para las aves migratorias.\n\n10. **Gastronomía**: Saborea la fabada asturiana, la sidra natural, los cocidos montañeses, y por supuesto, los mariscos frescos y pescados de la costa cantábrica.\n\nRespetar el entorno natural y cultural es esencial para disfrutar de estas maravillas de manera sostenible. Cualquier opción que elijas te regalará experiencias memorables.",
+                "refusal": null,
+                "annotations": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 37,
+        "completion_tokens": 582,
+        "total_tokens": 619,
+        "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "audio_tokens": 0,
+            "accepted_prediction_tokens": 0,
+            "rejected_prediction_tokens": 0
+        }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_a288987b44"
+}

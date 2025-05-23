@@ -15,7 +15,9 @@ namespace Application.Aventureo.Extensions
         public static void AddExternalCommunication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IPlacesService, PlacesService>(
-                provider => new PlacesService(configuration)); ;
+                provider => new PlacesService(configuration));
+            services.AddScoped<IAIService, AIService>(
+                provider => new AIService(configuration));
         }
     }
 }
