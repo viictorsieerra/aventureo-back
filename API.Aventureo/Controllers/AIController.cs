@@ -1,15 +1,15 @@
-﻿using Application.Aventureo.ExternalCommunication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Core.Aventureo.DTO;
+using Core.Aventureo.Interfaces.ExternalCommunication;
 namespace API.Aventureo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AIController : ControllerBase
     {
-        private readonly AIService _service;
+        private readonly IAIService _service;
 
-        public AIController(AIService service)
+        public AIController(IAIService service)
         {
             _service = service;
         }
