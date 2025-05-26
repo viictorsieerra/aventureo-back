@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Aventureo.DTO
 {
-    public record class UserMessage
+    public record UserMessage
     {
         public required string Message { get; set; }
     }

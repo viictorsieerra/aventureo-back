@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Aventureo.DTO
 {
-    public record class CreatePartePlanDTO
+    public record CreatePartePlanDTO
     {
         public int idPlan { get; set; }
         public string? nombre { get; set; }
@@ -14,7 +14,7 @@ namespace Core.Aventureo.DTO
         public decimal precio { get; set; }
         public string? comentario { get; set; }
     }
-    public record class UpdatePartePlanDTO
+    public record UpdatePartePlanDTO
     {
         public int idPartePlan { get; set; }
         public string? nombre { get; set; }

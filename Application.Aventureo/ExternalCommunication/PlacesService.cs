@@ -8,6 +8,7 @@ using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.ExternalCommunication;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Aventureo.ExternalCommunication
 {
@@ -40,7 +41,7 @@ namespace Application.Aventureo.ExternalCommunication
             /*
             using (HttpClient client = new HttpClient())
             {
-                url+= $"json?location={query.location}&radius={query.radius}&type=lodging&key={apiKey}";
+                url+= $"/nearbysearch/json?location={query.location}&radius={query.radius}&type=lodging&key={apiKey}";
 
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -53,6 +54,37 @@ namespace Application.Aventureo.ExternalCommunication
 
             }
             */
+        }
+
+        public async Task<InfoPlace> GetInfoPlace(string placeId)
+        {
+            string? url = _configuration["GOOGLE_PLACES:UrlApi"];
+            string? apiKey = _configuration["GOOGLE_PLACES:ApiKey"];
+
+            if (apiKey == null || apiKey == "" || url == null || url == "")
+                throw new ArgumentNullException("URL O KEY DE GOOGLE PLACE NO ESTÁ RELLENADA");
+
+            if (placeId == null)
+                throw new ArgumentNullException("IDENTIFICADOR DEL ALOJAMIENTO MAL RECIBIDA");
+
+            string filePath = "ExampleInfoPlace.json";
+            string responseBody = File.ReadAllText(filePath);
+
+            /*
+            using (HttpClient client = new HttpClient())
+            {
+                url+= $"/details/json?place_id={placeId}&fields=name,website,url,international_phone_number&key={apiKey}";
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+            }
+            */
+
+            RootInfoPlace data = JsonConvert.DeserializeObject<RootInfoPlace>(responseBody);
+
+            return data.result;
         }
     }
 }

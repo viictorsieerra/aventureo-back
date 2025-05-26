@@ -1,17 +1,17 @@
 ﻿namespace Core.Aventureo.DTO
 {
-    public record class LoginDTO
+    public record LoginDTO
     {
         public string? Email {  get; set; }
         public string? Contrasena { get; set; }
     }
-    public record class UserOutDTO
+    public record UserOutDTO
     {
         public int? IdUsuario { get; set; }
         public string? Email { get; set; }
         public bool? RolAdmin {  get; set; } = false;
     }
-    public record class RegisterUserDTO
+    public record RegisterUserDTO
     {
         public string? Nombre { get; set; }
         public string? Apellidos { get; set; }
@@ -19,7 +19,7 @@
         public string? Email { get; set; }
         public string? Contrasena { get; set; }
     }
-    public record class AddModUserDTO
+    public record AddModUserDTO
     {
         public int IdUsuario { get; set; } = 0;
         public string? Nombre { get; set; }
@@ -29,14 +29,14 @@
         public string? Contrasena { get; set; }
         public bool? RolAdmin { get; set; } = false;
     }
-    public record class UpdateUserDTO
+    public record UpdateUserDTO
     {
         public string? Nombre { get; set; }
         public string? Apellidos { get; set; }
         public string? Contrasena { get; set; }
     }
 
-    public record class TokenDto
+    public record TokenDto
     {
         public string? Value { get; set; }
     }

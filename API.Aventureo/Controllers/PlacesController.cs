@@ -16,12 +16,20 @@ namespace API.Aventureo.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResultPlaces>> AddAsync([FromBody] QueryPlaces query)
+        public async Task<ActionResult<ResultPlaces>> GetPlacesAsync([FromBody] QueryPlaces query)
         {
 
             var result = await _service.GetPlaces(query);
             return Ok(result);
 
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<InfoPlace>> GetInfoPlaceAsync([FromQuery] string placeId)
+        {
+            var result = await _service.GetInfoPlace(placeId);
+
+            return Ok(result);
         }
     }
 }

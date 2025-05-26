@@ -10,5 +10,6 @@ namespace Core.Aventureo.Interfaces.ExternalCommunication
     public interface IPlacesService
     {
         Task<List<ResultPlaces>> GetPlaces(QueryPlaces places);
+        Task<InfoPlace> GetInfoPlace (string placeId);
     }
 }
