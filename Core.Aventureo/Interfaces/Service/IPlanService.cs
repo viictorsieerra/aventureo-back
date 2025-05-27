@@ -14,6 +14,8 @@ namespace Core.Aventureo.Interfaces.Service
         Task<Plan?> GetByIdAsync(int idPlan);
         Task<CreatePlanDTO> AddAsync(CreatePlanDTO PlanDTO);
         Task<Plan> UpdateAsync(UpdatePlanDTO PlanDTO);
+        Task<List<Plan>> GetByLugarAsync(string lugar);
+
         Task DeleteAsync(int id);
     }
 }

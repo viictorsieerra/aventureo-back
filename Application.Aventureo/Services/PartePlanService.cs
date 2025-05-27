@@ -26,7 +26,7 @@ namespace Application.Aventureo.Services
         public async Task<PartePlan?> GetByIdAsync(int idPartePlan)
         {
             PartePlan partePlan = await _repository.GetByIdAsync(idPartePlan);
-
+                
             return partePlan;
         }
         public async Task<CreatePartePlanDTO> AddAsync(CreatePartePlanDTO PartePlanDTO)
