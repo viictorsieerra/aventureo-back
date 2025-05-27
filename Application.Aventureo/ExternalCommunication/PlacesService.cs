@@ -73,7 +73,7 @@ namespace Application.Aventureo.ExternalCommunication
             /*
             using (HttpClient client = new HttpClient())
             {
-                url+= $"/details/json?place_id={placeId}&fields=name,website,url,international_phone_number&key={apiKey}";
+                url+= $"/details/json?place_id={placeId}&fields=website,url,international_phone_number&key={apiKey}";
 
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
