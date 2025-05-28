@@ -15,5 +15,6 @@ namespace Core.Aventureo.Interfaces.Service
         Task<CreatePartePlanDTO> AddAsync(CreatePartePlanDTO PartePlanDTO);
         Task<PartePlan> UpdateAsync(UpdatePartePlanDTO PartePlanDTO);
         Task DeleteAsync(int id);
+        Task<List<PartePlan>> GetByPlan(int idPlan);
     }
 }

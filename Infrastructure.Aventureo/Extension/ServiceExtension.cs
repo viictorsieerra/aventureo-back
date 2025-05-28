@@ -7,6 +7,7 @@ using Core.Aventureo.Interfaces.Repository;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Infraestructure.Aventureo.Repository;
 using Infraestructure.Aventureo.Repository.Entities;
+using Infrastructure.Aventureo.Repository.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infraestructure.Aventureo.Extension
@@ -17,6 +18,7 @@ namespace Infraestructure.Aventureo.Extension
         {
             services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IPartePlanRepository, PartePlanRepository>();
         }
     }
 }

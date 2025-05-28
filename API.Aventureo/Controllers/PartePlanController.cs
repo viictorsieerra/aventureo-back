@@ -64,5 +64,12 @@ namespace API.Aventureo.Controllers
             await _service.DeleteAsync(idPartePlan);
             return NoContent();
         }
+        [HttpGet("ByPlan/{idPlan}")]
+        public async Task<ActionResult<List<PartePlan>>> GetByPlan(int idPlan)
+        {
+            var partePlans = await _service.GetByPlan(idPlan);
+            return Ok(partePlans);
+        }
+
     }
 }
