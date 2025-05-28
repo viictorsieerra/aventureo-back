@@ -34,6 +34,14 @@ namespace API.Aventureo.Controllers
 
         }
 
+        [HttpGet("Auth")]
+        public async Task<ActionResult<List<Viaje>>> GetViajesByUser()
+        {
+            List<Viaje> result = await _service.GetViajeByUser(User);
+
+            return Ok(result);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<CreateViajeDTO>> AddAsync([FromBody] CreateViajeDTO Viaje)

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
-using Core.Aventureo.Interfaces.Repository;
+using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
 
 namespace Application.Aventureo.Services
 {
     public class ViajeService : IViajeService
     {
-        private readonly IRepositoryBase<Viaje> _repository;
+        private readonly IViajeRepository _repository;
 
-        public ViajeService(IRepositoryBase<Viaje> repository)
+        public ViajeService(IViajeRepository repository)
         {
             _repository = repository;
         }
@@ -30,6 +31,24 @@ namespace Application.Aventureo.Services
 
             return viaje;
         }
+
+        public async Task<List<Viaje>> GetViajeByUser(ClaimsPrincipal user)
+        {
+            var id = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+            int idUsuario;
+
+            if (!int.TryParse(id.Value, out idUsuario))
+                throw new Exception("Fallo al cambiar la ID");
+
+            List<Viaje> result = await _repository.GetViajesByUser(idUsuario);
+
+            if (result == null || !result.Any())
+                throw new KeyNotFoundException("No se han encontrado viajes para este usuario");
+
+            return result;
+        }
+
         public async Task<CreateViajeDTO> AddAsync(CreateViajeDTO ViajeDTO)
         {
             Viaje viaje = new Viaje

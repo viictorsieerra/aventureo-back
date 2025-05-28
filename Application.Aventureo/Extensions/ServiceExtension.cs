@@ -20,6 +20,7 @@ namespace Application.Aventureo.Extensions
             services.AddScoped<IViajeService, ViajeService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IPartePlanService, PartePlanService>();
+            services.AddScoped<IGastoService, GastoService>();
         }
     }
 }
