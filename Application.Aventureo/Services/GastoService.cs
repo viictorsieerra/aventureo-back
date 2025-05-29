@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Aventureo.DTO;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
-using Core.Aventureo.Interfaces.Repository;
+using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
 
 namespace Application.Aventureo.Services
 {
     public class GastoService : IGastoService
     {
-        private readonly IRepositoryBase<Gasto> _repository;
-        public GastoService (IRepositoryBase<Gasto> repository)
+        private readonly IGastoRepository _repository;
+        public GastoService (IGastoRepository repository)
         {
             _repository = repository;
         }
@@ -35,6 +30,14 @@ namespace Application.Aventureo.Services
 
             return result;
         }
+
+        public async Task<List<Gasto>> GetGastosByViaje(int idViaje)
+        {
+            List<Gasto> result = await _repository.GetGastosByViaje(idViaje);
+
+            return result;
+        }
+
         public async Task<CreateGastoDTO> AddAsync(CreateGastoDTO gastoDTO)
         {
             Gasto gasto = new Gasto

@@ -11,20 +11,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Aventureo.Repository.Entities
 {
-    public class ViajeRepository : RepositoryBase<Viaje>, IViajeRepository
+    public class GastoRepository : RepositoryBase<Gasto>, IGastoRepository
     {
         private readonly AppDbContext _context;
-
-        public ViajeRepository (AppDbContext context) : base(context)
+        public GastoRepository (AppDbContext context) : base (context)
         {
             _context = context;
         }
 
-        public async Task <List<Viaje>> GetViajesByUser (int userId)
+        public async Task <List<Gasto>> GetGastosByViaje (int id)
         {
-            List<Viaje> result = await _context.Viajes.Where(v => v.idUsuario == userId).ToListAsync();
+            List<Gasto> gastos = await _context.Gastos.Where(g => g.idViaje == id).ToListAsync();
 
-            return result;
+            if (gastos == null || !gastos.Any())
+                throw new KeyNotFoundException("No se han encontrado gastos para este viaje");
+
+            return gastos;
         }
     }
 }
