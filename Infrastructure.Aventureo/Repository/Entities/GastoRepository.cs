@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Infraestructure.Aventureo.Context;
@@ -19,9 +20,16 @@ namespace Infrastructure.Aventureo.Repository.Entities
             _context = context;
         }
 
-        public async Task <List<Gasto>> GetGastosByViaje (int id)
+        public async Task <List<GastoDTO>> GetGastosByViaje (int id)
         {
-            List<Gasto> gastos = await _context.Gastos.Where(g => g.idViaje == id).ToListAsync();
+            List<GastoDTO> gastos = await _context.Gastos.Join(_context.Categorias, gas => gas.idCategoria, cat => cat.IdCategoria,
+                (gas, cat) => new GastoDTO
+                {
+                    nombre = gas.nombre,
+                    cantidad = gas.cantidad,
+                    idViaje = gas.idViaje,
+                    categoria = cat.Nombre
+                }).ToListAsync();
 
             if (gastos == null || !gastos.Any())
                 throw new KeyNotFoundException("No se han encontrado gastos para este viaje");

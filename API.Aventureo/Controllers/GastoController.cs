@@ -36,9 +36,9 @@ namespace API.Aventureo.Controllers
         }
 
         [HttpGet("Viaje/{idViaje}")]
-        public async Task<ActionResult<List<Gasto>>> GetGastosByViaje(int idViaje)
+        public async Task<ActionResult<List<GastoDTO>>> GetGastosByViaje(int idViaje)
         {
-            List<Gasto> result = await _service.GetGastosByViaje(idViaje);
+            List<GastoDTO> result = await _service.GetGastosByViaje(idViaje);
 
             return Ok(result);
         }

@@ -31,9 +31,9 @@ namespace Application.Aventureo.Services
             return result;
         }
 
-        public async Task<List<Gasto>> GetGastosByViaje(int idViaje)
+        public async Task<List<GastoDTO>> GetGastosByViaje(int idViaje)
         {
-            List<Gasto> result = await _repository.GetGastosByViaje(idViaje);
+            List<GastoDTO> result = await _repository.GetGastosByViaje(idViaje);
 
             return result;
         }

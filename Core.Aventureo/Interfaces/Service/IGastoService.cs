@@ -12,7 +12,7 @@ namespace Core.Aventureo.Interfaces.Service
     {
         Task<List<Gasto>> GetAllAsync();
         Task<Gasto?> GetByIdAsync(int idGasto);
-        Task<List<Gasto>> GetGastosByViaje(int idViaje);
+        Task<List<GastoDTO>> GetGastosByViaje(int idViaje);
         Task<CreateGastoDTO> AddAsync(CreateGastoDTO gastoDTO);
         Task<Gasto> UpdateAsync(UpdateGastoDTO gastoDTO);
         Task DeleteAsync(int id);
