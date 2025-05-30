@@ -19,6 +19,7 @@ namespace Core.Aventureo.DTO
     }
     public record GastoDTO
     {
+        public int idGasto { get; set; }
         public int idViaje { get; set; }
         public string categoria { get; set; }
         public string nombre { get; set; }

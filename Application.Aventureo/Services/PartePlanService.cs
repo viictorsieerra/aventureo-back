@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Aventureo.DTO;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
-using Core.Aventureo.Interfaces.Repository;
+using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
 
 namespace Application.Aventureo.Services
 {
     public class PartePlanService : IPartePlanService
     {
-        private readonly IRepositoryBase<PartePlan> _repository;
-        public PartePlanService (IRepositoryBase<PartePlan> repository)
+        private readonly IPartePlanRepository _repository;
+        public PartePlanService (IPartePlanRepository repository)
         {
             _repository = repository;
         }
@@ -28,6 +23,12 @@ namespace Application.Aventureo.Services
             PartePlan partePlan = await _repository.GetByIdAsync(idPartePlan);
 
             return partePlan;
+        }
+        public async Task<List<PartePlan>> GetActividades (int idPlan)
+        {
+            List<PartePlan> result = await _repository.GetActividades(idPlan);
+
+            return result;
         }
         public async Task<CreatePartePlanDTO> AddAsync(CreatePartePlanDTO PartePlanDTO)
         {

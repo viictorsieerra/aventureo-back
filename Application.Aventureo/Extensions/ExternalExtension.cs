@@ -18,6 +18,7 @@ namespace Application.Aventureo.Extensions
                 provider => new PlacesService(configuration));
             services.AddScoped<IAIService, AIService>(
                 provider => new AIService(configuration));
+            services.AddScoped<IMapService, MapService>();
         }
     }
 }

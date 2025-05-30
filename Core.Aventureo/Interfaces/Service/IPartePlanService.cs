@@ -12,6 +12,7 @@ namespace Core.Aventureo.Interfaces.Service
     {
         Task<List<PartePlan>> GetAllAsync();
         Task<PartePlan?> GetByIdAsync(int idPartePlan);
+        Task<List<PartePlan>> GetActividades(int idPlan);
         Task<CreatePartePlanDTO> AddAsync(CreatePartePlanDTO PartePlanDTO);
         Task<PartePlan> UpdateAsync(UpdatePartePlanDTO PartePlanDTO);
         Task DeleteAsync(int id);

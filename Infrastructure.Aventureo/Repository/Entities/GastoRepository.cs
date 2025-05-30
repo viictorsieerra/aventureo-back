@@ -25,11 +25,12 @@ namespace Infrastructure.Aventureo.Repository.Entities
             List<GastoDTO> gastos = await _context.Gastos.Join(_context.Categorias, gas => gas.idCategoria, cat => cat.IdCategoria,
                 (gas, cat) => new GastoDTO
                 {
+                    idGasto = gas.idGasto,
                     nombre = gas.nombre,
                     cantidad = gas.cantidad,
                     idViaje = gas.idViaje,
                     categoria = cat.Nombre
-                }).ToListAsync();
+                }).Where(g => g.idViaje == id).ToListAsync();
 
             if (gastos == null || !gastos.Any())
                 throw new KeyNotFoundException("No se han encontrado gastos para este viaje");

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure;
-using Core.Aventureo.DTO;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.ExternalCommunication;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Aventureo.ExternalCommunication
 {

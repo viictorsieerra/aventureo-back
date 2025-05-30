@@ -15,6 +15,7 @@ namespace Infraestructure.Aventureo.Extension
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IViajeRepository, ViajeRepository>();
             services.AddTransient<IGastoRepository, GastoRepository>();
+            services.AddTransient<IPartePlanRepository, PartePlanRepository>();
         }
     }
 }
