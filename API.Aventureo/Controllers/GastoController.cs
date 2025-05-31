@@ -43,6 +43,14 @@ namespace API.Aventureo.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Resumen/{idViaje}")]
+        public async Task<ActionResult<List<GastoCategoriaDTO>>> GetGastosCategoriaByViaje(int idViaje)
+        {
+            List<GastoCategoriaDTO> result = await _service.GetGastosCategoryByViaje(idViaje);
+
+            return Ok(result);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<CreateGastoDTO>> AddAsync([FromBody] CreateGastoDTO gasto)

@@ -8,7 +8,7 @@ namespace Application.Aventureo.Services
     public class GastoService : IGastoService
     {
         private readonly IGastoRepository _repository;
-        public GastoService (IGastoRepository repository)
+        public GastoService(IGastoRepository repository)
         {
             _repository = repository;
         }
@@ -21,7 +21,7 @@ namespace Application.Aventureo.Services
 
             return result;
         }
-       public async Task<Gasto?> GetByIdAsync(int idGasto)
+        public async Task<Gasto?> GetByIdAsync(int idGasto)
         {
             Gasto? result = await _repository.GetByIdAsync(idGasto);
 
@@ -34,6 +34,13 @@ namespace Application.Aventureo.Services
         public async Task<List<GastoDTO>> GetGastosByViaje(int idViaje)
         {
             List<GastoDTO> result = await _repository.GetGastosByViaje(idViaje);
+
+            return result;
+        }
+
+        public async Task<List<GastoCategoriaDTO>> GetGastosCategoryByViaje(int idViaje)
+        {
+            List<GastoCategoriaDTO> result = await _repository.GetGastosCategoryByViaje(idViaje);
 
             return result;
         }
