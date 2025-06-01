@@ -2,9 +2,11 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Application.Aventureo.Utils;
 using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
+using Core.Aventureo.Interfaces.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,11 +16,13 @@ namespace Application.Aventureo.Services
     {
         private readonly IConfiguration? _configuration;
         private readonly IUserRepository? _repository;
+        private readonly ISecurityUtils? _utils;
 
-        public JwtAuthService(IConfiguration? configuration, IUserRepository? repository)
+        public JwtAuthService(IConfiguration? configuration, IUserRepository? repository, ISecurityUtils utils)
         {
             _configuration = configuration;
             _repository = repository;
+            _utils = utils;
         }
 
         public async Task<TokenDto> GenerateTokenAsync(UserOutDTO user)
@@ -46,7 +50,7 @@ namespace Application.Aventureo.Services
 
         public async Task<TokenDto> Login(LoginDTO login)
         {
-            login.Contrasena = await HashPassword(login.Contrasena);
+            login.Contrasena = await _utils.HashPassword(login.Contrasena);
             UserOutDTO user = await _repository.GetUserFromCredentials(login);
 
             if (user == null)
@@ -58,28 +62,11 @@ namespace Application.Aventureo.Services
 
         public async Task<TokenDto> RegisterUser(RegisterUserDTO registerUser)
         {
-            registerUser.Contrasena = await HashPassword(registerUser.Contrasena);
+            registerUser.Contrasena = await _utils.HashPassword(registerUser.Contrasena);
             UserOutDTO user = await _repository.RegisterUserFromCredentials(registerUser);
             return await GenerateTokenAsync(user);
         }
 
-        public async Task<string> HashPassword(string password)
-        {
 
-            byte[] claveBytes = Encoding.UTF8.GetBytes(_configuration["JWT:HashKey"]);
-
-            using (HMACSHA256 hmac = new HMACSHA256(claveBytes))
-            {
-                byte[] textoBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashBytes = hmac.ComputeHash(textoBytes);
-
-                StringBuilder sb = new StringBuilder();
-                foreach (byte b in hashBytes)
-                {
-                    sb.Append(b.ToString("X2"));
-                }
-                return sb.ToString();
-            }
-        }
     }
 }

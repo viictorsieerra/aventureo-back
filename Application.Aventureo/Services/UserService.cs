@@ -8,15 +8,18 @@ using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
+using Core.Aventureo.Interfaces.Utils;
 
 namespace Application.Aventureo.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
-        public UserService(IUserRepository repository)
+        private readonly ISecurityUtils _utils;
+        public UserService(IUserRepository repository, ISecurityUtils utils)
         {
             _repository = repository;
+            _utils = utils;
         }
         public async Task<List<Usuario>> GetAllAsync()
         {
@@ -56,7 +59,7 @@ namespace Application.Aventureo.Services
                 apellidos = UsuarioDTO.Apellidos,
                 fecNacimiento = UsuarioDTO.FecNacimiento,
                 email = UsuarioDTO.Email,
-                contrasena = UsuarioDTO.Contrasena,
+                contrasena = await _utils.HashPassword(UsuarioDTO.Contrasena),
                 RolAdmin = UsuarioDTO.RolAdmin
             };
 
@@ -72,9 +75,9 @@ namespace Application.Aventureo.Services
             existingUser.apellidos = UsuarioDTO.Apellidos;
             existingUser.fecNacimiento = UsuarioDTO.FecNacimiento;
             existingUser.email = UsuarioDTO.Email;
-            existingUser.contrasena = UsuarioDTO.Contrasena;
+            existingUser.contrasena = existingUser.contrasena?? await _utils.HashPassword(UsuarioDTO.Contrasena);
             existingUser.RolAdmin = UsuarioDTO.RolAdmin;
-
+            
             await _repository.UpdateAsync(existingUser);
 
             return existingUser;

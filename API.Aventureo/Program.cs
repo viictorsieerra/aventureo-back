@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddInfraestructureLayer();
 builder.Services.AddApplicationLayer();
 builder.Services.AddExternalCommunication(builder.Configuration);
+builder.Services.AddUtilServices(builder.Configuration);
 builder.Services.AddJwtSecurity(builder.Configuration);
 
 // Servicios de controllers

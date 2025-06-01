@@ -12,6 +12,5 @@ namespace Core.Aventureo.Interfaces.Service
         Task<TokenDto> GenerateTokenAsync(UserOutDTO user);
         Task<TokenDto> Login(LoginDTO login);
         Task<TokenDto> RegisterUser(RegisterUserDTO user);
-        Task<string> HashPassword(string password);
     }
 }
