@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Aventureo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250521105553_InitialCreate")]
+    [Migration("20250602193628_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

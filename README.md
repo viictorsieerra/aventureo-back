@@ -5,4 +5,4 @@ ___
 `dotnet ef migrations add migrationName --project Infrastructure.Aventureo --startup-project API.Aventureo`
 
 **ACTUALIZAR LA BASE DE DATOS POR UNA MIGRACIÓN**
-`dotnet ef database update migrationName --project Infrastructure.Aventureo --startup-project API.Aventureo`
+`dotnet ef database update --project Infrastructure.Aventureo --startup-project API.Aventureo`
