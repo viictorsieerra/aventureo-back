@@ -25,16 +25,10 @@ namespace Application.Aventureo.ExternalCommunication
             if (query == null)
                 throw new ArgumentNullException("QUERY MAL RECIBIDA");
 
-            string filePath = "ejemploPlaces.json";
-            string responseBody = File.ReadAllText(filePath);
-            RootPlaces data = JsonConvert.DeserializeObject<RootPlaces>(responseBody);
-            List<ResultPlaces> result = data.results;
 
-            return result;
-            /*
             using (HttpClient client = new HttpClient())
             {
-                url+= $"/nearbysearch/json?location={query.location}&radius={query.radius}&type=lodging&key={apiKey}";
+                url += $"/nearbysearch/json?location={query.location}&radius={query.radius}&type=lodging&key={apiKey}";
 
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -46,7 +40,7 @@ namespace Application.Aventureo.ExternalCommunication
                 return result;
 
             }
-            */
+
         }
 
         public async Task<InfoPlace> GetInfoPlace(string placeId)
@@ -60,24 +54,19 @@ namespace Application.Aventureo.ExternalCommunication
             if (placeId == null)
                 throw new ArgumentNullException("IDENTIFICADOR DEL ALOJAMIENTO MAL RECIBIDA");
 
-            string filePath = "ExampleInfoPlace.json";
-            string responseBody = File.ReadAllText(filePath);
 
-            /*
             using (HttpClient client = new HttpClient())
             {
-                url+= $"/details/json?place_id={placeId}&fields=website,url,international_phone_number&key={apiKey}";
+                url += $"/details/json?place_id={placeId}&fields=website,url,international_phone_number&key={apiKey}";
 
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
                 string responseBody = await response.Content.ReadAsStringAsync();
+                RootInfoPlace data = JsonConvert.DeserializeObject<RootInfoPlace>(responseBody);
+
+                return data.result;
             }
-            */
-
-            RootInfoPlace data = JsonConvert.DeserializeObject<RootInfoPlace>(responseBody);
-
-            return data.result;
         }
     }
 }

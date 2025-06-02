@@ -20,57 +20,14 @@ namespace Application.Aventureo.ExternalCommunication
         {
             _config = config;
         }
-        public async Task<string> GetChatResponseWithTourismContext(string message)
-        {
-            /*
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-
-            var requestBody = new
-            {
-                model = "gpt-4o",
-                messages = new[]
-                {
-                        new { role = "system", content = "Eres un experto guía turístico de España." },
-                        new { role = "user", content = message }
-                    }
-            };
-
-            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-            {
-                return "Estoy recibiendo demasiadas peticiones ahora mismo. Inténtalo en unos segundos.";
-            }
-
-            response.EnsureSuccessStatusCode();
-
-            var responseString = await response.Content.ReadAsStringAsync();
-            */
-            string iaJsonFile = "ExampleIA.json";
-            string responseString = File.ReadAllText(iaJsonFile);
-            var jsonDoc = JsonDocument.Parse(responseString);
-
-            if (!jsonDoc.RootElement.TryGetProperty("choices", out var choices))
-            {
-                // Devuelve el error de OpenAI directamente o uno custom
-                if (jsonDoc.RootElement.TryGetProperty("error", out var error))
-                {
-                    var errorMessage = error.GetProperty("message").GetString();
-                    return $"Error de OpenAI: {errorMessage}";
-                }
-
-                return "Respuesta inesperada de la API.";
-            }
-
-            var reply = choices[0].GetProperty("message").GetProperty("content").GetString();
-            return reply;
-        }
         public async Task<string> GetChatResponse(string message)
         {
-                /*
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            string apiKey = _config["OpenAI:ApiKey"];
+            if (apiKey == null)
+                throw new ArgumentNullException("No se ha encontrado la ApiKey de OpenAI");
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
                 var requestBody = new
                 {
@@ -86,21 +43,16 @@ namespace Application.Aventureo.ExternalCommunication
 
                 var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content);
-                
+                var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
+
                 var responseString = await response.Content.ReadAsStringAsync();
-                */
-                string iaJsonFile = "ExampleIA.json";
-                string responseString = File.ReadAllText(iaJsonFile);
 
                 Console.WriteLine("Respuesta OpenAI:");
                 Console.WriteLine(responseString);
 
-                /* if (!response.IsSuccessStatusCode)
-                 {
-                     return $"Error de OpenAI: {response.StatusCode}\n{responseString}";
-                 }
-                */
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception($"Error de OpenAI: {response.StatusCode}\n{responseString}");
+
                 var jsonDoc = JsonDocument.Parse(responseString);
 
                 if (!jsonDoc.RootElement.TryGetProperty("choices", out var choices))
@@ -108,14 +60,16 @@ namespace Application.Aventureo.ExternalCommunication
                     if (jsonDoc.RootElement.TryGetProperty("error", out var error))
                     {
                         var errorMessage = error.GetProperty("message").GetString();
-                        return $"Error de OpenAI: {errorMessage}";
+                        throw new Exception ($"Error de OpenAI: {errorMessage}");
                     }
 
-                    return "Respuesta inesperada de la API.";
+                    throw new Exception("Respuesta inesperada de la API.");
+                    
                 }
 
                 var reply = choices[0].GetProperty("message").GetProperty("content").GetString();
                 return reply;
+            }
         }
     }
 }

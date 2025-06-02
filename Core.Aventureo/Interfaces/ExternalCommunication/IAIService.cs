@@ -8,7 +8,6 @@ namespace Core.Aventureo.Interfaces.ExternalCommunication
 {
     public interface IAIService
     {
-        Task<string> GetChatResponseWithTourismContext(string message);
         Task<string> GetChatResponse(string message);
     }
 }
