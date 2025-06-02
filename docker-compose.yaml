@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+  front:
+    build:
+      context: ../aventureo-front
+      dockerfile: ../aventureo-front/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
