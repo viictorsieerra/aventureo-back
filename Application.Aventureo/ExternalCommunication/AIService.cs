@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Core.Aventureo.DTO;
 using Core.Aventureo.Interfaces.ExternalCommunication;
 using Microsoft.Extensions.Configuration;
 
@@ -20,7 +21,7 @@ namespace Application.Aventureo.ExternalCommunication
         {
             _config = config;
         }
-        public async Task<string> GetChatResponse(string message)
+        public async Task<string> GetChatResponse(List<AIMessages> mensajes)
         {
             string apiKey = _config["OpenAI:ApiKey"];
             if (apiKey == null)
@@ -28,17 +29,15 @@ namespace Application.Aventureo.ExternalCommunication
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-
+                mensajes.Insert(0, new AIMessages
+                {
+                    role = "system",
+                    content = "Eres un gran experto en turismo"
+                });
                 var requestBody = new
                 {
                     model = "gpt-3.5-turbo",
-                    max_tokens = 15,  //  limite de la respuesta
-                    messages = new[]
-
-                                    {
-                new { role = "system", content = "Eres un experto guía turístico de España." },
-                new { role = "user", content = message }
-            }
+                    messages = mensajes
                 };
 
                 var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
@@ -60,11 +59,11 @@ namespace Application.Aventureo.ExternalCommunication
                     if (jsonDoc.RootElement.TryGetProperty("error", out var error))
                     {
                         var errorMessage = error.GetProperty("message").GetString();
-                        throw new Exception ($"Error de OpenAI: {errorMessage}");
+                        throw new Exception($"Error de OpenAI: {errorMessage}");
                     }
 
                     throw new Exception("Respuesta inesperada de la API.");
-                    
+
                 }
 
                 var reply = choices[0].GetProperty("message").GetProperty("content").GetString();

@@ -15,9 +15,9 @@ namespace API.Aventureo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetChatResponse([FromBody] UserMessage userMessage)
+        public async Task<IActionResult> GetChatResponse([FromBody] List<AIMessages> mensajes)
         {
-            var reply = await _service.GetChatResponse(userMessage.Message);
+            var reply = await _service.GetChatResponse(mensajes);
             return Ok(new { reply });
         }
     }

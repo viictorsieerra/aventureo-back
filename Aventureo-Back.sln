@@ -20,6 +20,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Aventureo", "Core.Aven
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Aventureo", "Infrastructure.Aventureo\Infrastructure.Aventureo.csproj", "{12457A28-5A3B-45DE-B4C7-56606B98518E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{470A021E-0B58-4DC4-9BA0-720BAB42EFE1}"
+	ProjectSection(SolutionItems) = preProject
+		manifests\deploy-api.yaml = manifests\deploy-api.yaml
+		docker-compose.yaml = docker-compose.yaml
+		Dockerfile = Dockerfile
+		manifests\svc-api.yaml = manifests\svc-api.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +63,7 @@ Global
 		{C81CBD4F-9FA3-7417-68CE-9D5F1FCCCA15} = {DFA41F75-6A9A-49B2-8DCC-F790AAF8EA97}
 		{46E86BB1-EB4E-4127-A37A-8107DD84E7D6} = {01E61863-A7E5-4313-99BB-494C8122F34D}
 		{12457A28-5A3B-45DE-B4C7-56606B98518E} = {77245CA9-8154-47E5-8F99-8AA2B1423B4C}
+		{470A021E-0B58-4DC4-9BA0-720BAB42EFE1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2B7ECCA-4474-435C-846E-05C209C25067}
