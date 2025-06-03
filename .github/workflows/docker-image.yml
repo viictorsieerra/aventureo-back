@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 env:
   EKS_CLUSTER_NAME: aventureo-tfg
-
+  AWS_REGION: us-east-1
 jobs:
 
   build:
