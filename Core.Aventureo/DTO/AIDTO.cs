@@ -10,4 +10,9 @@ namespace Core.Aventureo.DTO
     {
         public required string Message { get; set; }
     }
+    public record AIMessages
+    {
+        public string? role { get; set; }
+        public string? content { get; set; }
+    }
 }
