@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{470A02
 		manifests\deploy-api.yaml = manifests\deploy-api.yaml
 		docker-compose.yaml = docker-compose.yaml
 		.github\workflows\docker-image.yml = .github\workflows\docker-image.yml
+
 		Dockerfile = Dockerfile
 		manifests\svc-api.yaml = manifests\svc-api.yaml
 	EndProjectSection
