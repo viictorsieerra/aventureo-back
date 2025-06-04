@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Aventureo.DTO;
+﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
-using Core.Aventureo.Interfaces.Repository;
+using Core.Aventureo.Interfaces.Repository.Entities;
 using Core.Aventureo.Interfaces.Service;
 
 namespace Application.Aventureo.Services
 {
     public class PlanService : IPlanService
     {
-        private readonly IRepositoryBase<Plan> _repository;
-        public PlanService (IRepositoryBase<Plan> repository)
+        private readonly IPlanRepository _repository;
+        public PlanService (IPlanRepository repository)
         {
             _repository = repository;
         }
@@ -28,6 +23,12 @@ namespace Application.Aventureo.Services
             Plan plan = await _repository.GetByIdAsync(idPlan);
 
             return plan;
+        }
+        public async Task<List<Plan>> GetPlansByLugar(string lugar)
+        {
+            List<Plan> result = await _repository.GetPlansByLugar(lugar);
+
+            return result;
         }
         public async Task<CreatePlanDTO> AddAsync(CreatePlanDTO PlanDTO)
         {

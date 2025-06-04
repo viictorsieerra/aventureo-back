@@ -36,6 +36,13 @@ namespace API.Aventureo.Controllers
 
         }
 
+        [HttpGet("Lugar/{lugar}")]
+        public async Task <ActionResult<List<Plan>>> GetPlansByLugar(string lugar)
+        {
+            List<Plan> result = await _service.GetPlansByLugar(lugar);
+
+            return Ok(result);
+        }
 
         [HttpPost]
         public async Task<ActionResult<CreatePlanDTO>> AddAsync([FromBody] CreatePlanDTO Plan)
