@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: api
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: api
-        image: a27300/aventureo-back:01
+        image: a27300/aventureo-back:02
         ports:
         - containerPort: 8080

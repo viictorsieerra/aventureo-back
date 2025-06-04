@@ -1,10 +1,12 @@
 ﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Aventureo.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -16,7 +18,7 @@ namespace API.Aventureo.Controllers
             _service = categoriaService ?? throw new ArgumentNullException(nameof(categoriaService));
         }
 
-
+        [Authorize(Roles ="Admin,User")]
         [HttpGet]
         public async Task<ActionResult<List<Categoria>>> GetAllAsync()
         {
