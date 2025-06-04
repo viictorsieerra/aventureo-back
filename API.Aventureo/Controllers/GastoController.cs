@@ -1,10 +1,12 @@
 ﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Aventureo.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class GastoController : ControllerBase

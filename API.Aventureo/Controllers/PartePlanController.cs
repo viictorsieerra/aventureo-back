@@ -1,6 +1,7 @@
 ﻿using Core.Aventureo.DTO;
 using Core.Aventureo.Entities;
 using Core.Aventureo.Interfaces.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Aventureo.Controllers
@@ -43,7 +44,7 @@ namespace API.Aventureo.Controllers
 
             return Ok(result);
         }
-
+        [Authorize(Roles ="Admin,User")]
         [HttpPost]
         public async Task<ActionResult<CreatePartePlanDTO>> AddAsync([FromBody] CreatePartePlanDTO PartePlan)
         {
@@ -53,7 +54,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin,User")]
         [HttpPut]
         public async Task<ActionResult<PartePlan>> UpdateAsync([FromBody] UpdatePartePlanDTO PartePlan)
         {
@@ -63,7 +64,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin,User")]
         [HttpDelete("{idPartePlan}")]
         public async Task<IActionResult> DeleteAsync(int idPartePlan)
         {
