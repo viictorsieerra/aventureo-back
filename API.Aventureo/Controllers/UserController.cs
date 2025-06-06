@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Aventureo.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -19,7 +18,7 @@ namespace API.Aventureo.Controllers
             _service = service;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<List<Usuario>>> GetAllAsync()
         {
@@ -29,7 +28,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{idUsuario}")]
         public async Task<ActionResult<Usuario>> GetByIdAsync(int idUsuario)
         {
@@ -49,7 +48,7 @@ namespace API.Aventureo.Controllers
             return Ok(user);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<AddModUserDTO>> AddAsync([FromBody] AddModUserDTO Usuario)
         {
@@ -59,7 +58,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult<Usuario>> UpdateAsync([FromBody] AddModUserDTO Usuario)
         {
@@ -69,7 +68,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{idUsuario}")]
         public async Task<IActionResult> DeleteAsync(int idUsuario)
         {
