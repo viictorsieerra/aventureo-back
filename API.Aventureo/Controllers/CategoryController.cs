@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Aventureo.Controllers
 {
-    [Authorize(Roles ="Admin")]
+
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -27,7 +27,7 @@ namespace API.Aventureo.Controllers
                 return Ok(categorias);
         }
 
-
+        [Authorize(Roles = "Admin,User")]
         [HttpGet("{idCategoria}")]
         public async Task<ActionResult<Categoria>> GetByIdAsync(int idCategoria)
         {
@@ -38,7 +38,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<CreateCategoriaDTO>> AddAsync([FromBody] CreateCategoriaDTO categoria)
         {
@@ -48,7 +48,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult<Categoria>> UpdateAsync([FromBody] UpdateCategoriaDTO categoria)
         {
@@ -58,7 +58,7 @@ namespace API.Aventureo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{idCategoria}")]
         public async Task<IActionResult> DeleteAsync(int idCategoria)
         {
