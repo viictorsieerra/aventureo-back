@@ -23,7 +23,7 @@ namespace Application.Aventureo.ExternalCommunication
         }
         public async Task<string> GetChatResponse(List<AIMessages> mensajes)
         {
-            string apiKey = _config["OpenAI:ApiKey"];
+            string apiKey = _config["OPENAI_API_KEY"];
             if (apiKey == null)
                 throw new ArgumentNullException("No se ha encontrado la ApiKey de OpenAI");
             using (HttpClient client = new HttpClient())
